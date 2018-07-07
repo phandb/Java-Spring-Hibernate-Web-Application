@@ -19,7 +19,8 @@ public class PatientDAOImpl implements PatientDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	@Transactional
+	//removed  @Transactional so the Service layer start to call appropriate DAO. 
+	//Service will now manage transactions
 	public List<Patient> getPatients() {
 		// get the current Hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
@@ -31,7 +32,6 @@ public class PatientDAOImpl implements PatientDAO {
 		List<Patient> patients = theQuery.getResultList();
 		
 		//return the results
-		
 		return patients;
 	}
 

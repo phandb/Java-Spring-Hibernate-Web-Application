@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.java_spring_hibernate.entity.Patient;
+import com.java_spring_hibernate.service.PatientService;
 import com.patient_history.sh.dao.PatientDAO;
 import org.springframework.ui.Model;
 
@@ -14,21 +16,35 @@ import org.springframework.ui.Model;
 @RequestMapping("/patient")
 public class PatientController {
 	
-	//need to inject  the patient DAO
-	@Autowired
-	private PatientDAO patientDAO;
+	//need to inject  the patient service
 	
-	@RequestMapping("/list")
+	@Autowired
+	private PatientService patientService;
+	
+	//@RequestMapping("/list")
+	
+	//changed to only response to get request
+	@GetMapping("/list")
 	public String listPatients(Model theModel) {
 		//list-patients.jsp
 		
-		//get patients from the DAO
-		List<Patient> thePatients = patientDAO.getPatients();
+		//get patients from the service
+		List<Patient> thePatients = patientService.getPatients();
 		
 		//add the patients to the model
 		theModel.addAttribute("patients", thePatients);
 		return "list-patients";
 		
+	}
+	
+	@GetMapping("/addPatientForm")
+	public String addPatientForm(Model theModel) {
+		
+		//create model attribute to bind form data
+		Patient thePatient = new Patient();
+		
+		theModel.addAttribute("patient", thePatient);
+		return "patient-form";
 	}
 
 }
