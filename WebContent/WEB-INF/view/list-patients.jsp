@@ -7,38 +7,46 @@
 	
 	<link type="text/css" 
 		rel="stylesheet" 
-		href="${pageContext.request.contextPath }/resources/css/style.css">
+		href="${pageContext.request.contextPath }/resources/css/bootstrap.css">
 	<link type="text/css" 
 		rel="stylesheet" 
-		href="${pageContext.request.contextPath }/resources/css/bootstrap.css">
+		href="${pageContext.request.contextPath }/resources/css/style.css">
 		
 	
 </head>
 
 
 <body>
-	<div id ="wrapper">
-		<div class="container">
-				<div class="row">
-					<div class="col"></div>
-					
-					<div id="header" class="col-5"><h2>Patient Medical Management</h2></div>
-					<div class="col"></div>
+	
+		
+			<div class="container-fluid bg-primary ">
+			
+				<div class="page-header text-center ">
+				
+					<h1>Patient Medical Management </h1>
+					<h4>Spring Hibernate in Action</h4>
 				</div>
+				
 			</div>
-	</div>
+					
+				
+		
+	
 	
 	<div class="container">
-		<div class="row">
-			<div class="col"></div>
-			<div class="col-5">
-		
-			<!-- Add new button: Add Patient -->
-			<input type="button" value = "Add Patient"
-					onclick="window.location.href='addPatientForm'; return false;"
-					class="btn btn-primary"/>  <!-- -Style -->
+		<div class="row mg-2">
+			<div class="col-2"></div>
+			<div class="col-8">
+				<div class="btn-group"><!-- Add new button: Add Patient -->
+					<input type="button" 
+							class="btn btn-default add-patient-button"   
+							value = "Add Patient"
+							onclick="window.location.href='addPatientForm'; return false;"/> 
+				</div>
+			
 					
 			<table class="table table-sm table-bordered table-striped">
+			<thead class="thead-dark">
 				<tr>
 					<th scope="col">First Name</th>
 					<th scope="col">Middle Name</th>
@@ -46,6 +54,7 @@
 					<th scope="col">Action</th>
 					
 				</tr>
+			</thead>
 				<!-- Loop Over and print out list patient -->
 				<c:forEach var="tempPatient" items="${patients}">
 				<tbody>
@@ -57,10 +66,11 @@
 					</tr>
 				</tbody>
 				</c:forEach>
+				
 			</table>
 		</div>
 		
-			<div class="col"></div>
+			<div class="col-2"></div>
 		</div>
 			
 		</div>

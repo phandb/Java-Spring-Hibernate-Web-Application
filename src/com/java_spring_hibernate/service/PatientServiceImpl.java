@@ -25,4 +25,12 @@ public class PatientServiceImpl implements PatientService {
 		return patientDAO.getPatients();
 	}
 
+	@Override
+	@Transactional
+	public void savePatient(Patient thePatient) {
+		// TODO Auto-generated method stub
+		patientDAO.savePatient(thePatient);
+		
+	}
+
 }

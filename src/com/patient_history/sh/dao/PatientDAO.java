@@ -8,4 +8,6 @@ import com.java_spring_hibernate.entity.Patient;
 public interface PatientDAO {
 	public List<Patient> getPatients();
 
+	public void savePatient(Patient thePatient);
+
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.java_spring_hibernate.entity.Patient;
@@ -45,6 +47,16 @@ public class PatientController {
 		
 		theModel.addAttribute("patient", thePatient);
 		return "patient-form";
+	}
+	
+	@PostMapping("/savePatient") //the "savePatient" must be matched up with the one in the form action
+	public String savePatient(@ModelAttribute("patient") Patient thePatient) {
+		//the model attribute "patient" must match with the one defined in the form
+		
+		//save new patient using our service
+		patientService.savePatient(thePatient);
+		
+		return "redirect:/patient/list";
 	}
 
 }

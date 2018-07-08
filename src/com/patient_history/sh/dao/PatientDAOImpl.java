@@ -25,14 +25,24 @@ public class PatientDAOImpl implements PatientDAO {
 		// get the current Hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		//create query
-		Query<Patient> theQuery = currentSession.createQuery("from Patient", Patient.class);
+		//create query...and sort by last name
+		Query<Patient> theQuery = currentSession.createQuery("from Patient order by last_name", Patient.class);
 		
 		//execute query and get result list
 		List<Patient> patients = theQuery.getResultList();
 		
 		//return the results
 		return patients;
+	}
+
+	@Override
+	public void savePatient(Patient thePatient) {
+		// get current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		//save the customer
+		currentSession.save(thePatient);
+		
 	}
 
 }
