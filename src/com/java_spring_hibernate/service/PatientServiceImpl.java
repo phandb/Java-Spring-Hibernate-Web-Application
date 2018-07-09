@@ -32,5 +32,26 @@ public class PatientServiceImpl implements PatientService {
 		patientDAO.savePatient(thePatient);
 		
 	}
+	
+	@Override
+	@Transactional
+	public Patient getPatient(int theId) {
+		
+		return patientDAO.getPatient(theId);
+	}
+
+	@Override
+	@Transactional
+	public void deletePatient(int theId) {
+		patientDAO.deletePatient(theId);
+		
+	}
+
+	@Override
+	@Transactional
+	public List<Patient> searchPatients(String theSearchName) {
+		
+		return patientDAO.searchPatients(theSearchName);
+	}
 
 }

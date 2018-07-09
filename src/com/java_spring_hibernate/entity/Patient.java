@@ -16,9 +16,9 @@ public class Patient {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	
 	//Map to appropriate column in table patients
-	//name = "column name"
-	@Column(name="patient_id")
-	private int patientId;
+	//name = "column name" in database
+	@Column(name="id")
+	private int id;
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -44,15 +44,15 @@ public class Patient {
 		
 	}
 
-
-	public int getPatient_id() {
-		return patientId;
+	public int getId() {
+		return id;
 	}
 
 
-	public void setPatient_id(int patient_id) {
-		this.patientId = patient_id;
+	public void setId(int id) {
+		this.id = id;
 	}
+	
 
 
 	public String getFirstName() {
@@ -117,10 +117,10 @@ public class Patient {
 
 	@Override
 	public String toString() {
-		return "Patient [patient_id=" + patientId + ", firstName=" + firstName + ", middleName=" + middleName
+		return "Patient [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName
 				+ ", lastName=" + lastName + ", gender=" + gender + ", dateOfBirth=" + dateOfBirth + ", address="
 				+ address + "]";
-	}
+	}	
 	
 	
 	

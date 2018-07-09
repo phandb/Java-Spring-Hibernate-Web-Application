@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -43,6 +44,13 @@
 							value = "Add Patient"
 							onclick="window.location.href='addPatientForm'; return false;"/> 
 				</div>
+				
+				<!--  add a search box -->
+            <form:form action="search" method="POST">
+                Search patient: <input type="text" name="theSearchName" />
+                
+                <input type="submit" value="Search" class="add-button" />
+            </form:form>
 			
 					
 			<table class="table table-sm table-bordered table-striped">
@@ -58,10 +66,28 @@
 				<!-- Loop Over and print out list patient -->
 				<c:forEach var="tempPatient" items="${patients}">
 				<tbody>
+				
+					<!-- Construct an update link with patient id -->
+					<c:url var="updateLink" value="/patient/updatePatientForm">
+						<c:param name="patientId" value="${tempPatient.id }"/>
+					</c:url>
+					
+					<!-- Construct an delete link with patient id -->
+					<c:url var="deleteLink" value="/patient/delete">
+						<c:param name="patientId" value="${tempPatient.id }"/>
+					</c:url>
+					
 					<tr>
 						<td>${tempPatient.firstName}  </td>
 						<td>${tempPatient.middleName}  </td>
 						<td>${tempPatient.lastName}  </td>
+						<td>
+							<!-- display update and delete link -->
+							<a href="${updateLink }">Update</a>
+							|
+							<a href="${deleteLink }"
+								onclick="if (!(confirm('Are you sure to delete this patient?'))) return false">Delete</a>
+						</td>
 						
 					</tr>
 				</tbody>

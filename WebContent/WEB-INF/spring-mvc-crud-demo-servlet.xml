@@ -31,7 +31,7 @@
 	<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/patient_history?useSSL=false" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/patient_medical_management?useSSL=false" />
         <property name="user" value="web_user" />
         <property name="password" value="web_user" /> 
 

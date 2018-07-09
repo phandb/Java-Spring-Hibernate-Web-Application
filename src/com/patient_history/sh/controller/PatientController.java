@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.java_spring_hibernate.entity.Patient;
 import com.java_spring_hibernate.service.PatientService;
@@ -57,6 +58,37 @@ public class PatientController {
 		patientService.savePatient(thePatient);
 		
 		return "redirect:/patient/list";
+	}
+	
+	@GetMapping("/updatePatientForm")
+	public String updatePatientForm(@RequestParam("patientId") int theId, Model theModel) {
+		
+		//get the patient from our service
+		Patient thePatient = patientService.getPatient(theId);
+		
+		//set patient as a model attribute to pre-populate the form
+		theModel.addAttribute("patient", thePatient);
+		//send over to  our form
+		
+		return "patient-form";
+	}
+	
+	@GetMapping("/delete")
+	public String deletePatient(@RequestParam("patientId") int theId) {
+		//delete the patient
+		patientService.deletePatient(theId);
+		return "redirect:/patient/list";
+	}
+	
+	@PostMapping("/search")
+	public String searchPatients(@RequestParam("theSearchName") String theSearchName, Model theModel) {
+		//search patients from service
+		List<Patient> thePatients = patientService.searchPatients(theSearchName);
+		
+		//add the patients to the model
+		theModel.addAttribute("patients", thePatients);
+		
+		return "list-patients";
 	}
 
 }

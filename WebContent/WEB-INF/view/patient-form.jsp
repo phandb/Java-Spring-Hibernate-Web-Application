@@ -29,9 +29,13 @@
 			</div>
 			
 	<div class="container">
-		<h3>Add Patient</h3>
+		<h3>Save Patient</h3>
 		<form:form action="savePatient" modelAttribute="patient" method="POST"
 					class="form-horizontal">
+					
+			<!-- The hidden form will keep specific patient Id when called -->
+			<form:hidden path="id" />
+			
 			<div class="form-group">
 				<label class="col-sm-2 control-label">First Name:</label>
 				<div class="col-sm-5">
