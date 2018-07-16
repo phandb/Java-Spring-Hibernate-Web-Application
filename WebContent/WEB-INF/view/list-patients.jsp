@@ -38,19 +38,28 @@
 		<div class="row mg-2">
 			<div class="col-2"></div>
 			<div class="col-8">
-				<div class="btn-group"><!-- Add new button: Add Patient -->
-					<input type="button" 
-							class="btn btn-default add-patient-button"   
-							value = "Add Patient"
-							onclick="window.location.href='addPatientForm'; return false;"/> 
+			
+				<div class="form-inline navbar"><!-- Add new button: Add Patient -->
+					
+						<input type="button" 
+								class="btn btn-primary add-patient-button"   
+								value = "Add Patient"
+								onclick="window.location.href='addPatientForm'; return false;"/> 
+					
+					
+					<!--  add a search box -->
+					
+			            <form:form action="search" method="POST" class="pull-right">
+			            	<div class="form-group ">
+			                 <input type="text" name="theSearchName" class="form-control" placeholder="search patient"/>
+			                 </div>
+			                <button type="submit" class=" btn btn-primary add-patient-button">Submit</button> 
+			               
+			            </form:form>
+		            
 				</div>
 				
-				<!--  add a search box -->
-            <form:form action="search" method="POST">
-                Search patient: <input type="text" name="theSearchName" />
-                
-                <input type="submit" value="Search" class="add-button" />
-            </form:form>
+				
 			
 					
 			<table class="table table-sm table-bordered table-striped">
@@ -67,6 +76,11 @@
 				<c:forEach var="tempPatient" items="${patients}">
 				<tbody>
 				
+					<!-- Construct an view patient link with patient id -->
+					<c:url var="viewLink" value="/patient/viewPatientInfo">
+						<c:param name="patientId" value="${tempPatient.id }"/>
+					</c:url>
+					
 					<!-- Construct an update link with patient id -->
 					<c:url var="updateLink" value="/patient/updatePatientForm">
 						<c:param name="patientId" value="${tempPatient.id }"/>
@@ -77,12 +91,14 @@
 						<c:param name="patientId" value="${tempPatient.id }"/>
 					</c:url>
 					
-					<tr>
+					<tr class="text-center">
 						<td>${tempPatient.firstName}  </td>
 						<td>${tempPatient.middleName}  </td>
 						<td>${tempPatient.lastName}  </td>
 						<td>
-							<!-- display update and delete link -->
+							<!-- display view, update and delete link -->
+							<a href="${viewLink }">View Patient Info</a>
+							|
 							<a href="${updateLink }">Update</a>
 							|
 							<a href="${deleteLink }"

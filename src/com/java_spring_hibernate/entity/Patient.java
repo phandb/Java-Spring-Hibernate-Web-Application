@@ -1,10 +1,17 @@
 package com.java_spring_hibernate.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 //Map entity class to database table
@@ -12,11 +19,11 @@ import javax.persistence.Table;
 @Table(name = "patients")
 public class Patient {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	
 	//Map to appropriate column in table patients
 	//name = "column name" in database
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 	
@@ -39,11 +46,25 @@ public class Patient {
 	private String address;
 	
 	
+	
+	//Mapping One to Many relationship with medications table
+	@OneToMany(fetch=FetchType.LAZY, cascade= CascadeType.ALL)
+	@JoinColumn(name="patient_id")
+	private List<Medication> medications;
+	
+	//Mapping One To Many relationship with physicians table
+	@OneToMany(mappedBy="patient",
+						cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+								 CascadeType.DETACH, CascadeType.REFRESH})
+	private List<Physician> physicians;
+	
 	//default constructor
 	public Patient() {
 		
 	}
-
+	
+	
+	//Getter and setter methods
 	public int getId() {
 		return id;
 	}
@@ -113,8 +134,33 @@ public class Patient {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	
+	//Setter and getter for relationship with medications table 
+	public List<Medication> getMedications() {
+		return medications;
+	}
 
 
+	public void setMedications(List<Medication> medications) {
+		this.medications = medications;
+	}
+	
+	
+	//Setter and getter for physicians
+
+
+	public List<Physician> getPhysicians() {
+		return physicians;
+	}
+
+
+	public void setPhysicians(List<Physician> physicians) {
+		this.physicians = physicians;
+	}
+
+
+	//ToString method
 	@Override
 	public String toString() {
 		return "Patient [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName
@@ -123,6 +169,27 @@ public class Patient {
 	}	
 	
 	
+	//Add convenience methods for bi-directional relationship
+	
+	public void addPhysician(Physician tempPhysician) {
+		if (physicians == null) {
+			physicians = new ArrayList<>();
+		}
+		
+		physicians.add(tempPhysician);
+		
+		tempPhysician.setPatient(this);
+	}
+	
+	//Convenience add medications method for uni-directional relationship
+	public void addMedication(Medication theMedication) {
+		if(medications == null) {
+			medications = new ArrayList<>();
+		}
+		
+		medications.add(theMedication);
+		
+	}
 	
 
 }

@@ -90,5 +90,17 @@ public class PatientController {
 		
 		return "list-patients";
 	}
-
+	/*
+	@GetMapping("/viewPatientInfo")
+	public String viewPatientInfo(@RequestParam("patientId") int theId, Model theModel) {
+		//get the patient information from the database
+		Patient thePatient = patientService.getPatient(theId);
+		
+		//set medications as a model attribute to populate info
+		theModel.addAttribute("medications", thePatient);
+		
+		//Send over to the patient info form
+		return "patient-info-form";
+	}
+*/
 }
