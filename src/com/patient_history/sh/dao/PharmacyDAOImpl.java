@@ -19,7 +19,7 @@ public class PharmacyDAOImpl implements PharmacyDAO {
 	private SessionFactory sessionFactory;
 	
 	@Override
-	@Transactional
+	//No need to call @Transactional here since service layer will call it.
 	public List<Pharmacy> getPharmacies() {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();

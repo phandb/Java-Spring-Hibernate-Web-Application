@@ -43,13 +43,16 @@ public class Medication {
 	//one patient can have many medications
 	@ManyToOne  
 	@JoinColumn(name="patient_id")
-	private Patient patientIdMedicationFk;
+	private Patient patient;
 	
 	
 	//Constructors
 	public Medication() {
 		
 	}
+
+
+	
 
 
 	/**
@@ -103,7 +106,14 @@ public class Medication {
 		this.medicationDosage = medicationDosage;
 	}
 	
-	
+	public Patient getPatient() {
+		return patient;
+	}
+
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
 	
 	
 

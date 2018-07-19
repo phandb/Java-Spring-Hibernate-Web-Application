@@ -1,5 +1,6 @@
 package com.patient_history.sh.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -19,7 +20,7 @@ public class MedicationDAOImpl implements MedicationDAO {
 	private SessionFactory sessionFactory;
 	
 	@Override
-	@Transactional
+	//No need to call @Transactional here since service layer will call it.
 	public List<Medication> getMedications() {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
@@ -33,6 +34,43 @@ public class MedicationDAOImpl implements MedicationDAO {
 		//return the results
 		
 		return medications;
+	}
+
+	@Override
+	public List<Medication> getMedication(int theId) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+	/*
+		String q = "FROM Medication AS M "
+				+ " INNER JOIN Patient "
+				+ " ON (M.patient = :patientId) ";  
+	*/
+			
+		//create a query
+		Query theQuery = currentSession.createQuery("select m.medicationName, m.medicationStrength, m.medicationDosage"
+				+ " from Medication m INNER JOIN  m.patient = :patientId ");
+																
+		
+		theQuery.setParameter("patientId", theId);
+		
+		//execute the query and get result list
+		List<Medication> theMedications = new ArrayList<Medication>();
+		
+		//List<Medication> theMedications =theQuery.getResultList();
+		
+		List<Object[]> rows = theQuery.getResultList();
+		
+		for (Object[] row : rows) {
+			Medication prescription = new Medication();
+			prescription.setMedicationName(row[0].toString());
+			prescription.setMedicationStrength(row[1].toString());
+			prescription.setMedicationDosage(row[2].toString());
+			theMedications.add(prescription);
+			
+		}
+		
+		//return the results
+		return theMedications;
 	}
 
 }

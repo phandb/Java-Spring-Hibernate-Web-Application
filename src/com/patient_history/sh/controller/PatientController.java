@@ -19,6 +19,14 @@ import org.springframework.ui.Model;
 @RequestMapping("/patient")
 public class PatientController {
 	
+	/*  Remove Patient DAO and replace with patient service
+	//Need to inject the patient DAO
+	@Autowired
+	private PatientDAO patientDAO;
+
+	*/
+	
+	
 	//need to inject  the patient service
 	
 	@Autowired
