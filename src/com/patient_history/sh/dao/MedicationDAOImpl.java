@@ -1,6 +1,7 @@
 package com.patient_history.sh.dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.java_spring_hibernate.entity.Medication;
+import com.java_spring_hibernate.entity.Patient;
 
 @Repository
 public class MedicationDAOImpl implements MedicationDAO {
@@ -35,42 +37,39 @@ public class MedicationDAOImpl implements MedicationDAO {
 		
 		return medications;
 	}
+	/*
+	@Override
+	public List<Patient> getSelectedPatient(List<Patient> selectedPatient){
+		return selectedPatient;
+	}*/
 
 	@Override
 	public List<Medication> getMedication(int theId) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-	/*
-		String q = "FROM Medication AS M "
-				+ " INNER JOIN Patient "
-				+ " ON (M.patient = :patientId) ";  
-	*/
-			
+				
 		//create a query
-		Query theQuery = currentSession.createQuery("select m.medicationName, m.medicationStrength, m.medicationDosage"
-				+ " from Medication m INNER JOIN  m.patient = :patientId ");
+		Query theQuery = currentSession.createQuery("select pat, med"
+													+ " from Medication as med"
+													+ " inner join  med.patient as pat"
+													+ " with med.patient.id = :patientId ");
 																
 		
 		theQuery.setParameter("patientId", theId);
 		
 		//execute the query and get result list
-		List<Medication> theMedications = new ArrayList<Medication>();
+		//List<Medication> thePatientMedications = new ArrayList<Medication>();
 		
-		//List<Medication> theMedications =theQuery.getResultList();
 		
-		List<Object[]> rows = theQuery.getResultList();
+		//List<Patient> thePatient = new ArrayList<Patient>();
 		
-		for (Object[] row : rows) {
-			Medication prescription = new Medication();
-			prescription.setMedicationName(row[0].toString());
-			prescription.setMedicationStrength(row[1].toString());
-			prescription.setMedicationDosage(row[2].toString());
-			theMedications.add(prescription);
-			
-		}
+		List<Medication> thePatientMedication = theQuery.getResultList();
+		
+		
 		
 		//return the results
-		return theMedications;
+		return thePatientMedication;
 	}
+	
 
 }

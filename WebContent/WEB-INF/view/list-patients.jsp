@@ -42,7 +42,7 @@
 				<div class="form-inline navbar"><!-- Add new button: Add Patient -->
 					
 						<input type="button" 
-								class="btn btn-primary add-patient-button"   
+								class="btn btn-primary"   
 								value = "Add Patient"
 								onclick="window.location.href='addPatientForm'; return false;"/> 
 					
@@ -53,8 +53,8 @@
 			            	<div class="form-group ">
 			                 <input type="text" name="theSearchName" class="form-control" placeholder="search patient"/>
 			                 </div>
-			                <button type="submit" class=" btn btn-primary add-patient-button">Submit</button> 
-			               
+			               <span> <button type="submit" class=" btn btn-primary">Search</button> 
+			               </span>
 			            </form:form>
 		            
 				</div>

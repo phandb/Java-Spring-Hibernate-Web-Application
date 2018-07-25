@@ -17,11 +17,19 @@ public class PharmacyServiceImpl implements PharmacyService {
 	@Autowired
 	private PharmacyDAO pharmacyDAO;
 	
+	
 	@Override
 	@Transactional
 	public List<Pharmacy> getPharmacies() {
 		// 
 		return pharmacyDAO.getPharmacies();
+	}
+
+	@Override
+	@Transactional
+	public List<Pharmacy> getPharmacy(int thePatientId) {
+		// 
+		return pharmacyDAO.getPharmacies(thePatientId);
 	}
 
 }

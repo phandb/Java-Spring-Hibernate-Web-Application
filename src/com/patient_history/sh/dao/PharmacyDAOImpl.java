@@ -34,4 +34,29 @@ public class PharmacyDAOImpl implements PharmacyDAO {
 		return pharmacies;
 	}
 
+	@Override
+	public List<Pharmacy> getPharmacies(int thePatientId) {
+		// get the current hibernate session
+				Session currentSession = sessionFactory.getCurrentSession();
+				
+				//create a query
+				Query theQuery = currentSession.createQuery("from Pharmacy phar"
+														  + " inner join phar.patient"
+														  + " with phar.patient.id = :patientId");
+				
+				/*Query theQuery = currentSession.createQuery("select pat, med"
+						+ " from Medication as med"
+						+ " inner join  med.patient as pat"
+						+ " with med.patient.id = :patientId "); */
+									
+
+				theQuery.setParameter("patientId", thePatientId);
+				
+				//Execute the query and get result list
+				List<Pharmacy> pharmacies = theQuery.getResultList();
+				
+				//return the reults
+				return pharmacies;
+	}
+
 }
