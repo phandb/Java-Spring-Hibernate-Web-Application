@@ -11,7 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 //Map entity class to database table
@@ -45,25 +49,57 @@ public class Patient {
 	@Column(name="address")
 	private String address;
 	
-	
+	/*****************************************************************/
 	
 	//Mapping One to Many relationship with medications table
 	@OneToMany(fetch=FetchType.LAZY, cascade= CascadeType.ALL)
 	@JoinColumn(name="patient_id")
 	private List<Medication> medications;
 	
-	//Mapping One To Many relationship with physicians table
-	@OneToMany(mappedBy="patient",
-						cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-								 CascadeType.DETACH, CascadeType.REFRESH})
+	/*******************************************************************/
+	//Mapping Many To Many relationship with physicians table
+	@ManyToMany(fetch=FetchType.LAZY,
+				cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+						  CascadeType.DETACH, CascadeType.REFRESH})
+	@JoinTable(
+			name="patients_physicians",
+			joinColumns=@JoinColumn(name="patient_id"),
+			inverseJoinColumns=@JoinColumn(name="physician_id")
+			)
 	private List<Physician> physicians;
+	
+	/*****************************************************************/
+	//Mapping Many To Many relationship with pharmacies table
+	//No CascadeType.REMOVE since we don't want to delete a patient
+	@ManyToMany(fetch=FetchType.LAZY,
+				cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+						CascadeType.DETACH, CascadeType.REFRESH	})
+	@JoinTable(
+			name = "patient_pharmacy",
+			joinColumns=@JoinColumn(name="patient_id"),
+			inverseJoinColumns=@JoinColumn(name="pharmacy_id")
+			)
+	private List<Pharmacy> pharmacies;
+	
+	/*****************************************************************/
+	
+	
 	
 	//default constructor
 	public Patient() {
 		
 	}
 	
-	
+	public List<Pharmacy> getPharmacies() {
+		return pharmacies;
+	}
+
+
+	public void setPharmacies(List<Pharmacy> pharmacies) {
+		this.pharmacies = pharmacies;
+	}
+
+
 	//Getter and setter methods
 	public int getId() {
 		return id;
@@ -167,7 +203,7 @@ public class Patient {
 				+ ", lastName=" + lastName + ", gender=" + gender + ", dateOfBirth=" + dateOfBirth + ", address="
 				+ address + "]";
 	}	
-	
+	/*
 	
 	//Add convenience methods for bi-directional relationship
 	
@@ -178,8 +214,10 @@ public class Patient {
 		
 		physicians.add(tempPhysician);
 		
-		tempPhysician.setPatient(this);
+		//tempPhysician.setPatients(this);
 	}
+	
+	*/
 	
 	//Convenience add medications method for uni-directional relationship
 	public void addMedication(Medication theMedication) {

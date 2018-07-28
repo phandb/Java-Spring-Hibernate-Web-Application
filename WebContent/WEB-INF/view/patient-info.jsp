@@ -87,9 +87,9 @@
 							<tr>
 								<th scope="col">No</th>
 								<th scope="col">Physician Name</th>
+								<th scope="col">Specialty</th>
 								<th scope="col">Address</th>
 								<th scope="col">Phone</th>
-								<th scope="col">Specialty</th>
 								<th scope="col">Action</th>
 								
 							</tr>
@@ -102,9 +102,10 @@
 								<tr class="text-center">
 									<td>${i }</td>
 									<td>${tempPhysician.physicianName}  </td>
+									<td>${tempPhysician.physicianSpecialty}  </td>
 									<td>${tempPhysician.physicianAddress}  </td>
 									<td>${tempPhysician.physicianPhone}  </td>
-									<td>${tempPhysician.physicianSpecialty}  </td>
+									
 									
 								</tr>
 							</tbody>

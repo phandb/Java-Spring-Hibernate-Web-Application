@@ -1,12 +1,18 @@
 package com.java_spring_hibernate.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -31,7 +37,7 @@ public class Physician {
 	private int id;
 	
 	@Column(name="name")
-	private String physicanName;
+	private String physicianName;
 	
 	@Column(name="phone")
 	private String physicianPhone;
@@ -42,16 +48,23 @@ public class Physician {
 	@Column(name="specialty")
 	private String physicianSpecialty;
 	
-	
+	/*****************************************************************/
 	//Relationship with patients table
-	//a doctor can have many patients
+	//a doctor can have many patients, and  a patient can have many doctors
 	//No delete cascade type.  Can't not delete doctor once a patient is deleted
-	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+	@ManyToMany(fetch = FetchType.LAZY,
+				cascade= {CascadeType.PERSIST, CascadeType.MERGE,
 						 CascadeType.DETACH, CascadeType.REFRESH})
 	
-	@JoinColumn(name="patient_id")
-	private Patient patient;
+	@JoinTable(
+			name="patients_physicians",
+			joinColumns=@JoinColumn(name="physician_id"),
+			inverseJoinColumns=@JoinColumn(name="patient_id")
+			)
+	private List<Patient> patients;
 	
+	
+	/*****************************************************************/
 	//Constructors
 	public Physician() {
 		
@@ -63,8 +76,8 @@ public class Physician {
 	 * @param physicianAddress
 	 * @param physicianSpecialty
 	 */
-	public Physician(String physicanName, String physicianPhone, String physicianAddress, String physicianSpecialty) {
-		this.physicanName = physicanName;
+	public Physician(String physicianName, String physicianPhone, String physicianAddress, String physicianSpecialty) {
+		this.physicianName = physicianName;
 		this.physicianPhone = physicianPhone;
 		this.physicianAddress = physicianAddress;
 		this.physicianSpecialty = physicianSpecialty;
@@ -80,12 +93,12 @@ public class Physician {
 		this.id = id;
 	}
 
-	public String getPhysicanName() {
-		return physicanName;
+	public String getPhysicianName() {
+		return physicianName;
 	}
 
-	public void setPhysicanName(String physicanName) {
-		this.physicanName = physicanName;
+	public void setPhysicianName(String physicanName) {
+		this.physicianName = physicanName;
 	}
 
 	public String getPhysicianPhone() {
@@ -114,17 +127,26 @@ public class Physician {
 
 	
 
-	public Patient getPatient() {
-		return patient;
+	public List<Patient> getPatients() {
+		return patients;
 	}
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+	public void setPatients(List<Patient> patients) {
+		this.patients = patients;
+	}
+	
+	
+	//add a convenience method
+	public void addPatient(Patient thePatient) {
+		if(patients == null) {
+			patients = new ArrayList<>();
+		}
+		patients.add(thePatient);
 	}
 
 	@Override
 	public String toString() {
-		return "Physician [id=" + id + ", physicanName=" + physicanName + ", physicianPhone=" + physicianPhone
+		return "Physician [id=" + id + ", physicianName=" + physicianName + ", physicianPhone=" + physicianPhone
 				+ ", physicianAddress=" + physicianAddress + ", physicianSpecialty=" + physicianSpecialty + "]";
 	}
 	

@@ -40,9 +40,9 @@ public class PharmacyDAOImpl implements PharmacyDAO {
 				Session currentSession = sessionFactory.getCurrentSession();
 				
 				//create a query
-				Query theQuery = currentSession.createQuery("from Pharmacy phar"
-														  + " inner join phar.patient"
-														  + " with phar.patient.id = :patientId");
+				Query theQuery = currentSession.createQuery("SELECT phar FROM Pharmacy phar"
+														  + " JOIN phar.patients pat"
+														  + " WHERE pat.id = :patientId");
 				
 				/*Query theQuery = currentSession.createQuery("select pat, med"
 						+ " from Medication as med"

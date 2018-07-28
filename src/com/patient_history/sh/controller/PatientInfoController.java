@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.java_spring_hibernate.entity.Medication;
 import com.java_spring_hibernate.entity.Patient;
 import com.java_spring_hibernate.entity.Pharmacy;
+import com.java_spring_hibernate.entity.Physician;
 import com.java_spring_hibernate.service.MedicationService;
 import com.java_spring_hibernate.service.PatientService;
 import com.java_spring_hibernate.service.PharmacyService;
@@ -24,11 +25,17 @@ import com.java_spring_hibernate.service.PhysicianService;
 public class PatientInfoController {
 	
 	
-	//need to inject  the patient service
+	//need to inject  services
 	
 	
 	@Autowired
+	private PatientService patientService;
+	@Autowired
 	private MedicationService medicationService;
+	@Autowired
+	private PharmacyService pharmacyService;
+	@Autowired
+	private PhysicianService physicianService;
 	
 	@GetMapping("/viewPatientInfo")
 	public String listMedications(@RequestParam("patientId") int thePatientId,  Model theModel) {
@@ -36,11 +43,13 @@ public class PatientInfoController {
 		
 		//get the patient medication from our service
 		List<Medication> thePatientMedications = medicationService.getMedication(thePatientId);
-		
+		List<Pharmacy> thePharmacy = pharmacyService.getPharmacy(thePatientId);
+		List<Physician> thePhysicians = physicianService.getPhysician(thePatientId);
 		
 		//Prepare list patient and medication
 		List<Patient> thePatient = new ArrayList<Patient>();
 		List<Medication> theMedications = new ArrayList<Medication>();
+		
 		
 		//Separate patient and medications
 		
@@ -60,7 +69,8 @@ public class PatientInfoController {
 		//set medications as a model attribute to populate info
 		theModel.addAttribute("selectedPatient", thePatient);
 		theModel.addAttribute("medications", theMedications);
-		
+		theModel.addAttribute("pharmacies", thePharmacy);
+		theModel.addAttribute("physicians",  thePhysicians);
 		
 		//Send over to the patient info form
 		return "patient-info";
@@ -69,24 +79,6 @@ public class PatientInfoController {
 	
 
 	
-	@Autowired
-	private PharmacyService pharmacyService;
 	
-	
-	@GetMapping("/viewPatientInfo")
-	public String listPharmacies(@RequestParam("patientId") int thePatientId,  Model theModel) {
-		
-		
-		//get the patient medication from our service
-		List<Pharmacy> thePharmacies = pharmacyService.getPharmacy(thePatientId);
-		
-		//set medications as a model attribute to populate info
-		theModel.addAttribute("pharmacies", thePharmacies);
-		
-		
-		
-		//Send over to the patient info form
-		return "patient-info";
-	}
 
 }

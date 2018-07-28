@@ -22,4 +22,11 @@ public class PhysicianServiceImpl implements PhysicianService {
 		return physicianDAO.getPhysicians();
 	}
 
+	@Override
+	@Transactional
+	public List<Physician> getPhysician(int thePatientId) {
+		// TODO Auto-generated method stub
+		return physicianDAO.getPhysicians(thePatientId);
+	}
+
 }

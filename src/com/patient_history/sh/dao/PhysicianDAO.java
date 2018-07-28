@@ -7,4 +7,6 @@ import com.java_spring_hibernate.entity.Physician;
 public interface PhysicianDAO {
 	public List<Physician> getPhysicians();
 
+	public List<Physician> getPhysicians(int thePatientId);
+
 }

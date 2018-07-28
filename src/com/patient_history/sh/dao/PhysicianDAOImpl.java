@@ -33,4 +33,40 @@ public class PhysicianDAOImpl implements PhysicianDAO {
 		return physicians;
 	}
 
+	@Override
+	public List<Physician> getPhysicians(int thePatientId) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		/*
+		 * SELECT phy.id, phy.name,  phy.specialty, phy.phone, phy.address
+FROM physicians AS phy
+INNER JOIN patients_physicians AS pp
+ON (phy.id = pp.physician_id )
+INNER JOIN patients AS pat 
+ON (pat.id = pp.patient_id AND  pp.patient_id=7);
+		 * 
+		 * */
+		/*
+		Query theQuery = currentSession.createNativeQuery("SELECT phy.id, phy.name,  phy.specialty, phy.phone, phy.address"
+				+ " FROM physicians AS phy"
+				+ " INNER JOIN patients_physicians AS pp"
+				+ " ON (phy.id = pp.physician_id )"
+				+ " INNER JOIN patients AS pat "
+				+ " ON (pat.id = pp.patient_id AND  pp.patient_id = :patientId)");
+		*/
+		
+		Query theQuery = currentSession.createQuery(" SELECT phy FROM Physician phy"
+												+ " JOIN phy.patients pat"
+												+ " WHERE pat.id = :patientId ");
+		
+		theQuery.setParameter("patientId",  thePatientId);
+		
+		//execute the query and get result list
+		List<Physician> thePhysicians = theQuery.getResultList();
+		
+		//return result list																
+		return thePhysicians;
+	}
+
 }

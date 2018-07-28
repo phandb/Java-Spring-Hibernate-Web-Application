@@ -11,7 +11,5 @@ public interface MedicationService {
 
 	public List<Medication> getMedication(int theId);
 
-	//public List<Patient> getSelectedpatient(int thePatientId);
-
-	//List<Patient> getSelectedPatient(List<Patient> thePatient);
+	
 }
