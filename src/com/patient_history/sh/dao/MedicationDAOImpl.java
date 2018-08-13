@@ -70,6 +70,49 @@ public class MedicationDAOImpl implements MedicationDAO {
 		//return the results
 		return thePatientMedication;
 	}
+
+	@Override
+	public void saveMedication(Medication thePrescription, Patient thePatient) {
+		// get current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		//the saveOrUpdate will either save new record or update existing record.  
+		currentSession.saveOrUpdate(thePatient);
+		currentSession.saveOrUpdate(thePrescription);
+		
+	}
+	
+	//This method will return info for selected prescription 
+	@Override
+	public Medication getSelectedPrescription(int thePrescriptionId) {
+		
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+				
+				
+		//Retrieve/read from database using primary key
+		Medication thePrescription = currentSession.get(Medication.class, thePrescriptionId);
+				
+		//return the results
+		return thePrescription;
+	}
+	
+
+	@Override
+	public void deletePrescription(int thePrescriptionId) {
+		// get the current hibernate session
+				Session currentSession = sessionFactory.getCurrentSession();
+				
+				//delete object with primary key
+				Query theQuery = currentSession.createQuery("delete from Medication where id=:prescriptionId");
+				
+				theQuery.setParameter("prescriptionId", thePrescriptionId);
+				
+				theQuery.executeUpdate();
+		
+	}
+	
+	
 	
 
 }

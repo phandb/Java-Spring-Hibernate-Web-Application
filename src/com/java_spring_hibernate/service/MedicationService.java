@@ -11,5 +11,11 @@ public interface MedicationService {
 
 	public List<Medication> getMedication(int theId);
 
+	public void saveMedication(Medication thePrescription, Patient thePatient);
+
+	public Medication getSelectedPrescription(int thePrescriptionId);
+
+	public void deletePrescription(int thePrescriptionId);
+
 	
 }

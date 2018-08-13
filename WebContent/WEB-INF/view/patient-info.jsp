@@ -25,7 +25,7 @@
 				<div class="page-header text-center ">
 				
 					<h1>Patient Medical Management </h1>
-					<h4>Spring Hibernate in Action</h4>
+					<h4>Spring & Hibernate in Action</h4>
 				</div>
 				
 			</div>
@@ -40,12 +40,43 @@
 			<div class="col-8">
 	 			<div>
 					<c:set var="selectedPatient" value="${selectedPatient.get(0)}"/>
-					<h4 class="lead">Patient: ${selectedPatient.firstName} 
-								 ${selectedPatient.middleName} 
-								 ${selectedPatient.lastName} 
-					</h4>
+					
+					<h4 class="lead">Patient: ${selectedPatient.patientFullName()}</h4>
 			
 				</div>
+							
+				<div class="form-inline navbar">
+				
+					<form:form action="addPrescriptionForm" method="get" >
+						<!-- Add new Patient Button -->
+						<button class ="btn btn-primary" name="patientId" value="${selectedPatient.id}">Add Prescription</button>
+						
+						
+					
+						<!--  return button -->
+					
+			            <input type="button" 
+								class="btn btn-primary pull-right"   
+								value = "Return to Patient List"
+								onclick="window.location.href='${pageContext.request.contextPath}/patient/list'; return false;"/> 
+				
+		            
+					</form:form>
+					
+					
+					<%--- 
+						<input type="button" 
+								class="btn btn-primary"   
+								value = "Add Prescription"
+								onclick="window.location.href='addPrescriptionForm/${selectedPatient.id}'; return false;"/> 
+								
+						--%>
+					
+				</div>
+				
+				
+				
+								
 					<table class="table table-sm table-bordered table-striped">
 						<thead class="thead-dark">
 							<tr>
@@ -61,13 +92,36 @@
 						<c:set var="i" value="${0}"/>
 						<c:forEach var="tempMedication" items="${medications}">
 							<tbody>
+							
+								
+								
+								<!-- Construct an update link with medication id -->
+								<c:url var="updatePrescriptionLink" value="/patient/updatePrescriptionForm">
+									<c:param name="prescriptionId" value="${tempMedication.id }"/>
+									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
+								</c:url>
+								
+								<!-- Construct an delete link with medication id -->
+								<c:url var="deletePrescriptionLink" value="/patient/deletePrescription">
+									<c:param name="prescriptionId" value="${tempMedication.id }"/>
+									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
+									
+								</c:url>
+								
 								<c:set var="i" value="${i+1}"/>
 								<tr class="text-center">
-									<td>${i }</td>
+									<td>${i}</td>
 									<td>${tempMedication.medicationName}  </td>
 									<td>${tempMedication.medicationStrength}  </td>
 									<td>${tempMedication.medicationDosage}  </td>
-									
+									<td>
+											<!-- display update and delete link -->
+										
+										<a href="${updatePrescriptionLink }">Update</a>
+										|
+										<a href="${deletePrescriptionLink }"
+											onclick="if (!(confirm('Are you sure to delete this prescription?'))) return false">Delete</a>
+									</td>
 									
 								</tr>
 							</tbody>
@@ -80,8 +134,15 @@
 				</div>
 				
 				
-				<!-- List of Physician -->
+<!-- -------------------------List of Physician --------------------------------------------------->
 				<h4>List of Physicians</h4>
+				
+				
+						<input type="button" 
+								class="btn btn-primary"   
+								value = "Add Physician"
+								onclick="window.location.href='addPhysicianForm'; return false;"/> 
+								
 					<table class="table table-sm table-bordered table-striped">
 						<thead class="thead-dark">
 							<tr>
@@ -98,6 +159,19 @@
 						<c:set var="i" value="${0}"/>
 						<c:forEach var="tempPhysician" items="${physicians}">
 							<tbody>
+							
+								<!-- Construct an update link with medication id -->
+								<c:url var="updatePhysicianLink" value="/patient/updatePhysicianForm">
+									<c:param name="physicianId" value="${tempPhysician.id }"/>
+									
+								</c:url>
+								
+								<!-- Construct an delete link with medication id -->
+								<c:url var="deletePhysicianLink" value="/patient/deletePhysician">
+									<c:param name="physicianId" value="${tempPhysician.id }"/>
+									
+								</c:url>
+								
 								<c:set var="i" value="${i+1}"/>
 								<tr class="text-center">
 									<td>${i }</td>
@@ -105,7 +179,14 @@
 									<td>${tempPhysician.physicianSpecialty}  </td>
 									<td>${tempPhysician.physicianAddress}  </td>
 									<td>${tempPhysician.physicianPhone}  </td>
-									
+									<td>
+											<!-- display update and delete link -->
+										
+										<a href="${updatePhysicianLink }">Update</a>
+										|
+										<a href="${deletePhysicianLink }"
+											onclick="if (!(confirm('Are you sure to delete this doctor?'))) return false">Delete</a>
+									</td>
 									
 								</tr>
 							</tbody>
@@ -117,8 +198,15 @@
 					</c:if >
 					
 					
-					<!-- List of Physician -->
+<!-- ---------------------------------------List of Pharmacy ----------------------------------------------->
 				<h4>List of Pharmacies</h4>
+				
+				
+						<input type="button" 
+								class="btn btn-primary"   
+								value = "Add Pharmacy"
+								onclick="window.location.href='addPharmacyForm'; return false;"/> 
+								
 					<table class="table table-sm table-bordered table-striped">
 						<thead class="thead-dark">
 							<tr>
@@ -135,6 +223,20 @@
 						<c:set var="i" value="${0}"/>
 						<c:forEach var="tempPharmacy" items="${pharmacies}">
 							<tbody>
+							
+								<!-- Construct an update link with medication id -->
+								<c:url var="updatePharmacyLink" value="/patient/updatePharmacyForm">
+									<c:param name="pharmacyId" value="${tempPharmacy.id }"/>
+									
+								</c:url>
+								
+								<!-- Construct an delete link with medication id -->
+								<c:url var="deletePharmacyLink" value="/patient/deletePharmacy">
+									<c:param name="pharmacyId" value="${tempPharmacy.id }"/>
+									
+								</c:url>
+								
+								
 								<c:set var="i" value="${i+1}"/>
 								<tr class="text-center">
 									<td>${i }</td>
@@ -142,7 +244,14 @@
 									<td>${tempPharmacy.pharmacyAddress}  </td>
 									<td>${tempPharmacy.pharmacyPhone}  </td>
 									
-									
+									<td>
+											<!-- display update and delete link -->
+										
+										<a href="${updatePharmacyLink }">Update</a>
+										|
+										<a href="${deletePharmacyLink }"
+											onclick="if (!(confirm('Are you sure to delete this pharmacy?'))) return false">Delete</a>
+									</td>
 								</tr>
 							</tbody>
 						</c:forEach>

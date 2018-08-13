@@ -25,7 +25,7 @@
 				<div class="page-header text-center ">
 				
 					<h1>Patient Medical Management </h1>
-					<h4>Spring Hibernate in Action</h4>
+					<h4>Spring & Hibernate in Action</h4>
 				</div>
 				
 			</div>
@@ -39,7 +39,10 @@
 			<div class="col-2"></div>
 			<div class="col-8">
 			
-				<div class="form-inline navbar"><!-- Add new button: Add Patient -->
+				<div class="form-inline navbar">
+				
+				
+						<!-- Add new button: Add Patient -->
 					
 						<input type="button" 
 								class="btn btn-primary"   
@@ -77,17 +80,17 @@
 				<tbody>
 				
 					<!-- Construct an view patient link with patient id -->
-					<c:url var="viewLink" value="/patient/viewPatientInfo">
+					<c:url var="viewPatientLink" value="/patient/viewPatientInfo">
 						<c:param name="patientId" value="${tempPatient.id }"/>
 					</c:url>
 					
 					<!-- Construct an update link with patient id -->
-					<c:url var="updateLink" value="/patient/updatePatientForm">
+					<c:url var="updatePatientLink" value="/patient/updatePatientForm">
 						<c:param name="patientId" value="${tempPatient.id }"/>
 					</c:url>
 					
 					<!-- Construct an delete link with patient id -->
-					<c:url var="deleteLink" value="/patient/delete">
+					<c:url var="deletePatientLink" value="/patient/deletePatient">
 						<c:param name="patientId" value="${tempPatient.id }"/>
 					</c:url>
 					
@@ -97,11 +100,11 @@
 						<td>${tempPatient.lastName}  </td>
 						<td>
 							<!-- display view, update and delete link -->
-							<a href="${viewLink }">View Patient Info</a>
+							<a href="${viewPatientLink }">View Patient Info</a>
 							|
-							<a href="${updateLink }">Update</a>
+							<a href="${updatePatientLink }">Update</a>
 							|
-							<a href="${deleteLink }"
+							<a href="${deletePatientLink }"
 								onclick="if (!(confirm('Are you sure to delete this patient?'))) return false">Delete</a>
 						</td>
 						

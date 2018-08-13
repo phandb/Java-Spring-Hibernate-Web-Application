@@ -38,4 +38,26 @@ public class MedicationServiceImpl implements MedicationService {
 		return medicationDAO.getSelectedPatient(thePatient);
 	}
 	*/
+
+	@Override
+	@Transactional
+	public void saveMedication(Medication thePrescription, Patient thePatient) {
+		medicationDAO.saveMedication(thePrescription, thePatient);
+		
+	}
+
+	@Override
+	@Transactional
+	public Medication getSelectedPrescription(int theId) {
+		
+		
+		return medicationDAO.getSelectedPrescription(theId);
+	}
+
+	@Override
+	@Transactional
+	public void deletePrescription(int thePrescriptionId) {
+		medicationDAO.deletePrescription(thePrescriptionId);
+		
+	}
 }

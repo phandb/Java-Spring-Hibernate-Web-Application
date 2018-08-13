@@ -1,5 +1,7 @@
 package com.java_spring_hibernate.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="medications")
-public class Medication {
+public class Medication implements Serializable {
 	//annotate the class as an entity and map to database table
 
 		//define the fields
@@ -38,13 +40,14 @@ public class Medication {
 	@Column(name="medication_dosage")
 	private String medicationDosage;
 	
-	
+	/***********************************************************************************/
 	//Setup many to one relationship with patient table
 	//one patient can have many medications
 	@ManyToOne  
 	@JoinColumn(name="patient_id")
 	private Patient patient;
 	
+	/*********************************************************************************/
 	
 	//Constructors
 	public Medication() {
@@ -60,7 +63,7 @@ public class Medication {
 	 * @param medicationStrength
 	 * @param medicationDosage
 	 */
-	public Medication(String medicationName, String medicationStrength, String medicationDosage) {
+	public Medication(String medicationName, String medicationStrength, String medicationDosage ) {
 		this.medicationName = medicationName;
 		this.medicationStrength = medicationStrength;
 		this.medicationDosage = medicationDosage;

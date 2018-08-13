@@ -52,8 +52,8 @@ public class Patient {
 	/*****************************************************************/
 	
 	//Mapping One to Many relationship with medications table
-	@OneToMany(fetch=FetchType.LAZY, cascade= CascadeType.ALL)
-	@JoinColumn(name="patient_id")
+	@OneToMany(mappedBy="patient", cascade= CascadeType.ALL)
+	//@JoinColumn(name="patient_id")
 	private List<Medication> medications;
 	
 	/*******************************************************************/
@@ -123,11 +123,17 @@ public class Patient {
 
 
 	public String getMiddleName() {
+		if (middleName != null) {
+			return middleName;
+		}else 
+			middleName = middleName + ' ';
 		return middleName;
+		
 	}
 
 
 	public void setMiddleName(String middleName) {
+		
 		this.middleName = middleName;
 	}
 
@@ -195,7 +201,11 @@ public class Patient {
 		this.physicians = physicians;
 	}
 
-
+	public String patientFullName() {
+		String fullName;
+		fullName = firstName + " " + middleName + " " + lastName;
+		return fullName;
+	}
 	//ToString method
 	@Override
 	public String toString() {
@@ -219,6 +229,16 @@ public class Patient {
 	
 	*/
 	
+	
+	//Add convenience methods for bi-directional relationship with medications
+	public void add(Medication tempMedication) {
+		if (medications == null) {
+			medications = new ArrayList<>();
+			
+		}
+		medications.add(tempMedication);
+		tempMedication.setPatient(this);
+	}
 	//Convenience add medications method for uni-directional relationship
 	public void addMedication(Medication theMedication) {
 		if(medications == null) {

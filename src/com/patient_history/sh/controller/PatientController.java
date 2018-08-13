@@ -81,7 +81,7 @@ public class PatientController {
 		return "patient-form";
 	}
 	
-	@GetMapping("/delete")
+	@GetMapping("/deletePatient")
 	public String deletePatient(@RequestParam("patientId") int theId) {
 		//delete the patient
 		patientService.deletePatient(theId);
