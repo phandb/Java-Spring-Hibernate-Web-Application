@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.java_spring_hibernate.entity.Patient;
 import com.java_spring_hibernate.entity.Pharmacy;
 import com.patient_history.sh.dao.PharmacyDAO;
 
@@ -20,9 +21,9 @@ public class PharmacyServiceImpl implements PharmacyService {
 	
 	@Override
 	@Transactional
-	public List<Pharmacy> getPharmacies() {
+	public List<Pharmacy> getAllPharmacies() {
 		// 
-		return pharmacyDAO.getPharmacies();
+		return pharmacyDAO.getAllPharmacies();
 	}
 
 	@Override
@@ -30,6 +31,28 @@ public class PharmacyServiceImpl implements PharmacyService {
 	public List<Pharmacy> getPharmacy(int thePatientId) {
 		// 
 		return pharmacyDAO.getPharmacies(thePatientId);
+	}
+
+	@Override
+	@Transactional
+	public void savePharmacy(Pharmacy thePharmacy, Patient thePatient) {
+	
+		pharmacyDAO.savePharmacy(thePharmacy, thePatient);
+		
+	}
+
+	@Override
+	@Transactional
+	public Pharmacy getSelectedPharmacy(int thePharmacyId) {
+		
+		return pharmacyDAO.getSelectedPharmacy(thePharmacyId);
+	}
+
+	@Override
+	@Transactional
+	public void deletePharmacy(int thePharmacyId, int thePatientId) {
+		pharmacyDAO.deletePharmacy(thePharmacyId, thePatientId);
+		
 	}
 
 }

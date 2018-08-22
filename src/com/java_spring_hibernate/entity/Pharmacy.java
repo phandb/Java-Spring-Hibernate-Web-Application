@@ -134,17 +134,17 @@ public class Pharmacy {
 		this.pharmacyAddress = pharmacyAddress;
 	}
 
-  /*  
+
 	//add convenience methods for bi-directional relationship
-	public void add(Patient tempPatient) {
+	public void addPatient(Patient tempPatient) {
 		if (patients == null) {
 			patients = new ArrayList<>();
 		}
 		patients.add(tempPatient);
-		tempPatient.setPharmacy(this);
+		
 	}
 	
-*/
+
 
 	//generate toString() method
 	@Override
@@ -152,6 +152,9 @@ public class Pharmacy {
 		return "Pharmacy [id=" + id + ", pharmacyName=" + pharmacyName + ", pharmacyPhone=" + pharmacyPhone
 				+ ", pharmacyAddress=" + pharmacyAddress + ", patientId_FK=" + patients + "]";
 	}
+
+
+	
 
 	
 	

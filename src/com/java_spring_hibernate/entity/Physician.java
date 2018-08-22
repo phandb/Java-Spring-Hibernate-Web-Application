@@ -61,7 +61,7 @@ public class Physician {
 			joinColumns=@JoinColumn(name="physician_id"),
 			inverseJoinColumns=@JoinColumn(name="patient_id")
 			)
-	private List<Patient> patients;
+	private List<Patient> patients = new ArrayList<Patient>();
 	
 	
 	/*****************************************************************/

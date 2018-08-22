@@ -19,7 +19,6 @@
 
 <body>
 	
-		
 			<div class="container-fluid bg-primary ">
 			
 				<div class="page-header text-center ">
@@ -29,10 +28,6 @@
 				</div>
 				
 			</div>
-					
-				
-		
-	
 	
 	<div class="container">
 		<div class="row mg-2">
@@ -44,7 +39,7 @@
 					<h4 class="lead">Patient: ${selectedPatient.patientFullName()}</h4>
 			
 				</div>
-							
+					
 				<div class="form-inline navbar">
 				
 					<form:form action="addPrescriptionForm" method="get" >
@@ -60,7 +55,7 @@
 								value = "Return to Patient List"
 								onclick="window.location.href='${pageContext.request.contextPath}/patient/list'; return false;"/> 
 				
-		            
+		           	
 					</form:form>
 					
 					
@@ -75,7 +70,7 @@
 				</div>
 				
 				
-				
+				 <h4 class="text-center"> Medication List</h4>	
 								
 					<table class="table table-sm table-bordered table-striped">
 						<thead class="thead-dark">
@@ -131,18 +126,31 @@
 					<c:if test="${i == 0 }">
 						<h4 class="text-muted">No prescription for this patient</h4>
 					</c:if >
-				</div>
+				
+				
+				
+				<img src="${pageContext.request.contextPath }/resources/images/deco-line.jpg" class="center-block">
 				
 				
 <!-- -------------------------List of Physician --------------------------------------------------->
-				<h4>List of Physicians</h4>
+		
+						<form:form action="addPhysicianForm" method="get" >
+						<!-- Add new Patient Button -->
+						<button class ="btn btn-primary" name="patientId" value="${selectedPatient.id}">Add Physician</button>
+						
+						
+					
+						<!--  return button -->
+					
+			            <input type="button" 
+								class="btn btn-primary pull-right"   
+								value = "Return to Patient List"
+								onclick="window.location.href='${pageContext.request.contextPath}/patient/list'; return false;"/> 
 				
-				
-						<input type="button" 
-								class="btn btn-primary"   
-								value = "Add Physician"
-								onclick="window.location.href='addPhysicianForm'; return false;"/> 
+		           	
+					</form:form>
 								
+					<h4 class="text-center"> Physicians</h4>		
 					<table class="table table-sm table-bordered table-striped">
 						<thead class="thead-dark">
 							<tr>
@@ -163,13 +171,13 @@
 								<!-- Construct an update link with medication id -->
 								<c:url var="updatePhysicianLink" value="/patient/updatePhysicianForm">
 									<c:param name="physicianId" value="${tempPhysician.id }"/>
-									
+									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
 								</c:url>
 								
 								<!-- Construct an delete link with medication id -->
 								<c:url var="deletePhysicianLink" value="/patient/deletePhysician">
 									<c:param name="physicianId" value="${tempPhysician.id }"/>
-									
+									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
 								</c:url>
 								
 								<c:set var="i" value="${i+1}"/>
@@ -197,16 +205,28 @@
 						<h4 class="text-muted">No physician for this patient</h4>
 					</c:if >
 					
+					<img src="${pageContext.request.contextPath }/resources/images/deco-line.jpg" class="center-block">
 					
 <!-- ---------------------------------------List of Pharmacy ----------------------------------------------->
-				<h4>List of Pharmacies</h4>
 				
+						<form:form action="addPharmacyForm" method="get" >
+						<!-- Add new Patient Button -->
+						<button class ="btn btn-primary" name="patientId" value="${selectedPatient.id}">Add Pharmacy</button>
+						
+						
+					
+						<!--  return button -->
+					
+			            <input type="button" 
+								class="btn btn-primary pull-right"   
+								value = "Return to Patient List"
+								onclick="window.location.href='${pageContext.request.contextPath}/patient/list'; return false;"/> 
 				
-						<input type="button" 
-								class="btn btn-primary"   
-								value = "Add Pharmacy"
-								onclick="window.location.href='addPharmacyForm'; return false;"/> 
+		           	
+					</form:form> 
 								
+					<h4 class="text-center">Pharmacies</h4>		
+						
 					<table class="table table-sm table-bordered table-striped">
 						<thead class="thead-dark">
 							<tr>
@@ -227,13 +247,13 @@
 								<!-- Construct an update link with medication id -->
 								<c:url var="updatePharmacyLink" value="/patient/updatePharmacyForm">
 									<c:param name="pharmacyId" value="${tempPharmacy.id }"/>
-									
+									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
 								</c:url>
 								
 								<!-- Construct an delete link with medication id -->
 								<c:url var="deletePharmacyLink" value="/patient/deletePharmacy">
 									<c:param name="pharmacyId" value="${tempPharmacy.id }"/>
-									
+									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
 								</c:url>
 								
 								
@@ -261,13 +281,14 @@
 						<h4 class="text-muted">No pharmacy for this patient</h4>
 					</c:if >
 				
-		
+				</div>
 			<div class="col-2"></div>
-		</div>
 			
 		</div>
-	
-
+			
+		
+	<img src="${pageContext.request.contextPath }/resources/images/deco-line.jpg" class="center-block">
+</div>
 </body>
 
 </html>

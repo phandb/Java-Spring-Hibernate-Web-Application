@@ -66,7 +66,7 @@ public class Patient {
 			joinColumns=@JoinColumn(name="patient_id"),
 			inverseJoinColumns=@JoinColumn(name="physician_id")
 			)
-	private List<Physician> physicians;
+	private List<Physician> physicians = new ArrayList<Physician>();
 	
 	/*****************************************************************/
 	//Mapping Many To Many relationship with pharmacies table
@@ -213,7 +213,7 @@ public class Patient {
 				+ ", lastName=" + lastName + ", gender=" + gender + ", dateOfBirth=" + dateOfBirth + ", address="
 				+ address + "]";
 	}	
-	/*
+	
 	
 	//Add convenience methods for bi-directional relationship
 	
@@ -222,12 +222,15 @@ public class Patient {
 			physicians = new ArrayList<>();
 		}
 		
-		physicians.add(tempPhysician);
+		this.physicians.add(tempPhysician);
 		
-		//tempPhysician.setPatients(this);
+		tempPhysician.getPatients().add(this);
 	}
 	
-	*/
+	public void removePhysician(Physician tempPhysician) {
+		this.physicians.remove(tempPhysician);
+		tempPhysician.getPatients().remove(this);
+	}
 	
 	
 	//Add convenience methods for bi-directional relationship with medications

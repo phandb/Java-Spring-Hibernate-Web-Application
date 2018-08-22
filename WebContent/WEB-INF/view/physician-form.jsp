@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
@@ -6,7 +7,7 @@
 <html>
 
 <head>
-	<title>Save Patient</title>
+	<title>Add Physician</title>
 	
 	<link type="text/css" 
 		rel="stylesheet" 
@@ -23,60 +24,58 @@
 				<div class="page-header text-center ">
 				
 					<h1>Patient Medical Management </h1>
-					<h4>Spring Hibernate in Action</h4>
+					<h4>Spring & Hibernate in Action</h4>
 				</div>
 				
 			</div>
 			
 	<div class="container">
-		<h3>Save Patient</h3>
-		<form:form action="savePatient" modelAttribute="patient" method="POST"
+		<h3>Add New Physician</h3>
+		
+		
+		
+		<form:form action="savePhysician" modelAttribute="physician" method="POST"
 					class="form-horizontal">
 					
-			<!-- The hidden form will keep specific patient Id when called -->
+			<!-- The hidden form will keep specific prescription Id when called -->
 			<form:hidden path="id" />
+			<input type="hidden" name="selectedPatientId" value="${selectedPatientId}"/>
 			
 			<div class="form-group">
-				<label class="col-sm-2 control-label">First Name:</label>
+				<label class="col-sm-2 control-label">Physician Name:</label>
 				<div class="col-sm-5">
-					<form:input path="firstName" type="text" class="form-control" placeholder="first name"/>
+					<form:input path="physicianName" type="text" class="form-control" />
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Middle Name:</label>
+				<label class="col-sm-2 control-label">Specialty:</label>
 				<div class="col-sm-5">
-					<form:input path="middleName" type="text" class="form-control" placeholder="middle name"/>
+					<form:input path="physicianSpecialty" type="text" class="form-control"/>
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Last Name:</label>
+				<label class="col-sm-2 control-label">Addess:</label>
 				<div class="col-sm-5">
-					<form:input path="lastName" type="text" class="form-control" placeholder="last name"/>
+					<form:input path="physicianAddress" type="text" class="form-control" />
 				</div>
 			</div>
-			
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Gender:</label>
-				<div class="col-sm-2">
-					<form:input path="gender" type="text" class="form-control" placeholder="Male/Female"/>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Date of Birth:</label>
-				<div class="col-sm-3">
-					<form:input path="dateOfBirth" type="text" class="form-control" placeholder="YYYY-MM-DD"/>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="col-sm-2 control-label">Address:</label>
+				<label class="col-sm-2 control-label">Phone:</label>
 				<div class="col-sm-5">
-					<form:input path="address" type="text" class="form-control" placeholder="address"/>
+					<form:input path="physicianPhone" type="text" class="form-control" />
 				</div>
 			</div>
+			<%-- 
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Patient ID:</label>
+				<div class="col-sm-5">
+					<form:input path="patients[0].id" value="${selectedPatientId }"/>
+				</div>
+			</div>
+			
+			--%>
 			
 			<div class="form-group">
 				
@@ -85,9 +84,15 @@
 				</div>
 			</div>		
 		</form:form>
+		
 		<div class="clearfix">
-			<p><a href="${pageContext.request.contextPath}/patient/list">Back to Patient List</a>
+			
+			<p><a href=" <c:url value= "/patient/viewPatientInfo?patientId=${selectedPatientId}">
+						
+						</c:url> "> Back to the Patient Info View</a></p>
 		</div>
+		
+		
 		
 	</div>
 	
