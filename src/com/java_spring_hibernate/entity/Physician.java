@@ -137,7 +137,7 @@ public class Physician {
 	
 	
 	//add a convenience method
-	public void addPatient(Patient thePatient) {
+	public void addPatientToPhysician(Patient thePatient) {
 		if(patients == null) {
 			patients = new ArrayList<>();
 		}

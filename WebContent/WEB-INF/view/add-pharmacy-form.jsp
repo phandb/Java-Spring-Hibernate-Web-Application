@@ -30,8 +30,8 @@
 			</div>
 	<c:set var="allPharmacies" value="${allPharmacies.get(0)}"/>		
 	<div class="container">
-		<h3>Save Pharmacy</h3>
-		<form:form action="savePharmacy" modelAttribute="pharmacy" method="POST"
+		<h3>Add Pharmacy to Patient</h3>
+		<form:form action="addPharmacy" modelAttribute="pharmacy" method="POST"
 					class="form-horizontal">
 					
 			<!-- The hidden form will keep specific prescription Id when called -->
@@ -42,8 +42,8 @@
 				<label class="col-sm-2 control-label">Pharmacy Name:</label>
 				<div class="col-sm-5">
 					<select class="form-control" name="pharmacyList">
-						<c:forEach items="${listAllPharmacies}" var="pharmacies">
-							<option value="${pharmacies.id}">${pharmacies.pharmacyName}</option>
+						<c:forEach items="${listAllPharmacies}" var="allPharmacies">
+							<option value="${allPharmacies.id}">${allPharmacies.pharmacyName}</option>
 							
 						</c:forEach>
 					</select>

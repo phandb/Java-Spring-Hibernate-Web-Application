@@ -30,11 +30,11 @@
 			</div>
 			
 	<div class="container">
-		<h3>Add New Physician</h3>
+		<h3>Add Physician to the Patient</h3>
 		
 		
 		
-		<form:form action="savePhysician" modelAttribute="physician" method="POST"
+		<form:form action="addPhysician" modelAttribute="physician" method="POST"
 					class="form-horizontal">
 					
 			<!-- The hidden form will keep specific prescription Id when called -->
@@ -44,14 +44,29 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Physician Name:</label>
 				<div class="col-sm-5">
+				<%-- 
+					<select class="form-control" name="physicianId">
+						<option value="">Select Doctor in the List</option>
+						<c:forEach items="${listAllPhysicians }" var="allPhysicians">
+							
+							<option value="${allPhysicians.id}">${allPhysicians.physicianName}</option>
+							
+						</c:forEach>
+					</select>
+					
+					--%>
+					
+					
 					<form:input path="physicianName" type="text" class="form-control" />
+					 
 				</div>
 			</div>
-			
+			<% String s = request.getParameter("physicianId"); %>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Specialty:</label>
 				<div class="col-sm-5">
-					<form:input path="physicianSpecialty" type="text" class="form-control"/>
+					<form:input path="physicianSpecialty"
+								 type="text" class="form-control"  />
 				</div>
 			</div>
 			

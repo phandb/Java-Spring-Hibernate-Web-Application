@@ -33,10 +33,10 @@
 		<div class="row mg-2">
 			<div class="col-2"></div>
 			<div class="col-8">
-	 			<div>
-					<c:set var="selectedPatient" value="${selectedPatient.get(0)}"/>
+	 			 <div>
+					<c:set var="thePatient" value="${selectedPatient}"/>
 					
-					<h4 class="lead">Patient: ${selectedPatient.patientFullName()}</h4>
+					<h4 class="lead">Patient: ${thePatient.patientFullName()}</h4>
 			
 				</div>
 					
@@ -44,7 +44,7 @@
 				
 					<form:form action="addPrescriptionForm" method="get" >
 						<!-- Add new Patient Button -->
-						<button class ="btn btn-primary" name="patientId" value="${selectedPatient.id}">Add Prescription</button>
+						<button class ="btn btn-primary" name="patientId" value="${thePatient.id}">Add Prescription</button>
 						
 						
 					
@@ -93,13 +93,13 @@
 								<!-- Construct an update link with medication id -->
 								<c:url var="updatePrescriptionLink" value="/patient/updatePrescriptionForm">
 									<c:param name="prescriptionId" value="${tempMedication.id }"/>
-									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
+									<c:param name="selectedPatientId" value= "${thePatient.id }"/>
 								</c:url>
 								
 								<!-- Construct an delete link with medication id -->
 								<c:url var="deletePrescriptionLink" value="/patient/deletePrescription">
 									<c:param name="prescriptionId" value="${tempMedication.id }"/>
-									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
+									<c:param name="selectedPatientId" value= "${thePatient.id }"/>
 									
 								</c:url>
 								
@@ -136,7 +136,7 @@
 		
 						<form:form action="addPhysicianForm" method="get" >
 						<!-- Add new Patient Button -->
-						<button class ="btn btn-primary" name="patientId" value="${selectedPatient.id}">Add Physician</button>
+						<button class ="btn btn-primary" name="patientId" value="${thePatient.id}">Add Physician</button>
 						
 						
 					
@@ -171,13 +171,13 @@
 								<!-- Construct an update link with medication id -->
 								<c:url var="updatePhysicianLink" value="/patient/updatePhysicianForm">
 									<c:param name="physicianId" value="${tempPhysician.id }"/>
-									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
+									<c:param name="selectedPatientId" value= "${thePatient.id }"/>
 								</c:url>
 								
 								<!-- Construct an delete link with medication id -->
 								<c:url var="deletePhysicianLink" value="/patient/deletePhysician">
 									<c:param name="physicianId" value="${tempPhysician.id }"/>
-									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
+									<c:param name="selectedPatientId" value= "${thePatient.id }"/>
 								</c:url>
 								
 								<c:set var="i" value="${i+1}"/>
@@ -211,7 +211,7 @@
 				
 						<form:form action="addPharmacyForm" method="get" >
 						<!-- Add new Patient Button -->
-						<button class ="btn btn-primary" name="patientId" value="${selectedPatient.id}">Add Pharmacy</button>
+						<button class ="btn btn-primary" name="patientId" value="${thePatient.id}">Add Pharmacy</button>
 						
 						
 					
@@ -247,13 +247,13 @@
 								<!-- Construct an update link with medication id -->
 								<c:url var="updatePharmacyLink" value="/patient/updatePharmacyForm">
 									<c:param name="pharmacyId" value="${tempPharmacy.id }"/>
-									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
+									<c:param name="selectedPatientId" value= "${thePatient.id }"/>
 								</c:url>
 								
 								<!-- Construct an delete link with medication id -->
 								<c:url var="deletePharmacyLink" value="/patient/deletePharmacy">
 									<c:param name="pharmacyId" value="${tempPharmacy.id }"/>
-									<c:param name="selectedPatientId" value= "${selectedPatient.id }"/>
+									<c:param name="selectedPatientId" value= "${thePatient.id }"/>
 								</c:url>
 								
 								

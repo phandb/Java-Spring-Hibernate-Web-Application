@@ -19,8 +19,8 @@ public class PhysicianServiceImpl implements PhysicianService {
 	
 	@Override
 	@Transactional
-	public List<Physician> getPhysicians() {
-		return physicianDAO.getPhysicians();
+	public List<Physician> getAllPhysicians() {
+		return physicianDAO.getAllPhysicians();
 	}
 
 	@Override

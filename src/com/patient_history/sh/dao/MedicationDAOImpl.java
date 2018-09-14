@@ -49,11 +49,11 @@ public class MedicationDAOImpl implements MedicationDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 				
 		//create a query
-		Query theQuery = currentSession.createQuery("select pat, med"
-													+ " from Medication as med"
-													+ " inner join  med.patient as pat"
-													+ " with med.patient.id = :patientId ");
-																
+		Query theQuery = currentSession.createQuery("SELECT med"
+													+ " FROM Medication as med"
+													+ " JOIN  med.patient as pat"
+													+ " Where pat.id = :patientId ");
+										
 		
 		theQuery.setParameter("patientId", theId);
 		
@@ -63,12 +63,12 @@ public class MedicationDAOImpl implements MedicationDAO {
 		
 		//List<Patient> thePatient = new ArrayList<Patient>();
 		
-		List<Medication> thePatientMedication = theQuery.getResultList();
+		List<Medication> theMedications = theQuery.getResultList();
 		
 		
 		
 		//return the results
-		return thePatientMedication;
+		return theMedications;
 	}
 
 	@Override

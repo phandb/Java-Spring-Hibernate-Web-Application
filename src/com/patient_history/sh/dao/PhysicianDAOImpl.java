@@ -23,7 +23,7 @@ public class PhysicianDAOImpl implements PhysicianDAO {
 	
 	@Override
 	//No need to call @Transactional here since service layer will call it.
-	public List<Physician> getPhysicians() {
+	public List<Physician> getAllPhysicians() {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
@@ -31,9 +31,9 @@ public class PhysicianDAOImpl implements PhysicianDAO {
 		Query<Physician> theQuery = currentSession.createQuery("from Physician", Physician.class);
 		
 		//execute query and get result list
-		List<Physician> physicians = theQuery.getResultList();
+		List<Physician> listAllPhysicians = theQuery.getResultList();
 		
-		return physicians;
+		return listAllPhysicians;
 	}
 
 	@Override
@@ -41,24 +41,7 @@ public class PhysicianDAOImpl implements PhysicianDAO {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		/*
-		 * SELECT phy.id, phy.name,  phy.specialty, phy.phone, phy.address
-FROM physicians AS phy
-INNER JOIN patients_physicians AS pp
-ON (phy.id = pp.physician_id )
-INNER JOIN patients AS pat 
-ON (pat.id = pp.patient_id AND  pp.patient_id=7);
-		 * 
-		 * */
-		/*
-		Query theQuery = currentSession.createNativeQuery("SELECT phy.id, phy.name,  phy.specialty, phy.phone, phy.address"
-				+ " FROM physicians AS phy"
-				+ " INNER JOIN patients_physicians AS pp"
-				+ " ON (phy.id = pp.physician_id )"
-				+ " INNER JOIN patients AS pat "
-				+ " ON (pat.id = pp.patient_id AND  pp.patient_id = :patientId)");
-		*/
-		
+	
 		Query theQuery = currentSession.createQuery(" SELECT phy FROM Physician phy"
 												+ " JOIN phy.patients pat"
 												+ " WHERE pat.id = :patientId ");
@@ -78,10 +61,10 @@ ON (pat.id = pp.patient_id AND  pp.patient_id=7);
 		// get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		//add the patient to physician
-		thePhysician.addPatient(thePatient);
+		//call the convenience method to add the patient to physician
+		thePhysician.addPatientToPhysician(thePatient);
 		//save or update either new or existing records
-		//currentSession.save(thePatient);
+		//currentSession.save(thePhysician);
 		currentSession.saveOrUpdate(thePhysician);
 		
 	}

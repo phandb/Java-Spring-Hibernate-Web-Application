@@ -2,6 +2,7 @@ package com.java_spring_hibernate.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 //Map entity class to database table
 @Entity
@@ -43,8 +46,9 @@ public class Patient {
 	@Column(name="gender")
 	private String gender;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name="date_of_birth")
-	private String dateOfBirth;
+	private Date dateOfBirth;
 	
 	@Column(name="address")
 	private String address;
@@ -157,13 +161,13 @@ public class Patient {
 		this.gender = gender;
 	}
 
-
-	public String getDateOfBirth() {
+	
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
 
-	public void setDateOfBirth(String dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -201,11 +205,7 @@ public class Patient {
 		this.physicians = physicians;
 	}
 
-	public String patientFullName() {
-		String fullName;
-		fullName = firstName + " " + middleName + " " + lastName;
-		return fullName;
-	}
+	
 	//ToString method
 	@Override
 	public String toString() {
@@ -214,10 +214,24 @@ public class Patient {
 				+ address + "]";
 	}	
 	
+	//Patient full name
+	public String patientFullName() {
+		String fullName;
+		if(middleName  != null) {
+			fullName = firstName + " " + middleName + " " + lastName;
+		}else {
+			middleName = middleName + " ";
+			fullName = firstName + " " + middleName + " " + lastName;
+		}
+		
+		
+		return fullName;
+	}
+	
 	
 	//Add convenience methods for bi-directional relationship
 	
-	public void addPhysician(Physician tempPhysician) {
+	public void addPhysicianToPatient(Physician tempPhysician) {
 		if (physicians == null) {
 			physicians = new ArrayList<>();
 		}
