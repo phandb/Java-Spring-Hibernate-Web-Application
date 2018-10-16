@@ -14,5 +14,8 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="C:/Users/Dalton/eclipse-workspace/web-patient-history-sb/WebContent/WEB-INF/lib/javax.persistence-api-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dalton/Downloads/java-json.jar.zip"/>
+	<classpathentry kind="lib" path="C:/Users/Dalton/Downloads/java-json.jar/java-json.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Dalton/Desktop/json-taglib-0.4.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

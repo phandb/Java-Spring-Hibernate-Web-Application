@@ -94,15 +94,7 @@ public class Patient {
 		
 	}
 	
-	public List<Pharmacy> getPharmacies() {
-		return pharmacies;
-	}
-
-
-	public void setPharmacies(List<Pharmacy> pharmacies) {
-		this.pharmacies = pharmacies;
-	}
-
+	
 
 	//Getter and setter methods
 	public int getId() {
@@ -205,7 +197,15 @@ public class Patient {
 		this.physicians = physicians;
 	}
 
-	
+	public List<Pharmacy> getPharmacies() {
+		return pharmacies;
+	}
+
+
+	public void setPharmacies(List<Pharmacy> pharmacies) {
+		this.pharmacies = pharmacies;
+	}
+
 	//ToString method
 	@Override
 	public String toString() {

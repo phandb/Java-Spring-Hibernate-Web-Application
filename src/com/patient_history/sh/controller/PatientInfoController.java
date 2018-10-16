@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.java_spring_hibernate.entity.Medication;
 import com.java_spring_hibernate.entity.Patient;
@@ -210,6 +211,15 @@ public class PatientInfoController {
 		//delete the patient
 		physicianService.deletePhysician(thePhysicianId, thePatientId);
 		return "redirect:/patient/viewPatientInfo?patientId=" + patient_id;
+	}
+	
+	public Physician getPhysicianById(@RequestParam("selectedPhysician") int thePhysicianId, Model theModel) {
+		Physician thePhysician = physicianService.getSelectedPhysician(thePhysicianId);
+		
+		//set seleted physican and patient as a model attribute to pre-populate the form
+		theModel.addAttribute("selectedPhysician", thePhysician);
+		return thePhysician;
+		
 	}
 	
 
