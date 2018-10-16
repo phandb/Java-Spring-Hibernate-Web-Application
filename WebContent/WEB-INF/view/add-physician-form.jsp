@@ -23,74 +23,8 @@
 	
 			
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath }/resources/js/populatePhysicianInfo.js"
-			type="text/javascript"></script>
-	
-	<script type="text/javascript">
-<%-- 	
-	$(document).ready(function() {
-	// var doctorObj = new Object
-	$("#selectedDoctor option").filter(function(){
+	<script src="${pageContext.request.contextPath }/resources/js/getPhysicianInfo.js"	type="text/javascript"></script>
 		
-		return $(this).val() == $("#name").val();
-	}).attr('selected', true);
-	
-	 $("#selectedDoctor").change(function(){
-		
-		/* var dataString = $(this).val();
-		 alert(dataString);*/
-		 var doctorObj = JSON.parse('$(this).val()');
-		 alert(doctorObj.physicianName);
-		 
-		 document.getElementById("name").innerHTML = doctorObj.physicianName;
-		 $("#name").doctorObj.physicianName;
-		 $("#specialty").doctorObj.physicianSpecialty;
-		 
-	 });
-});
-
---%>
-$(document).ready(function() {
-	/*
-	 var doctorObj = JSON.parse($(this).val());
-	 //alert(doctorObj.physicianName);
-	
-		$("#name").text(doctorObj.physicianName);
-		$("#specialty").html(doctorObj.physicianSpecialty);
-	
-	/*
-	// var doctorObj = new Object
-	$("#selectedDoctor option").filter(function(){
-		
-		return $(this).val() == $("#name").val();
-	}).attr('selected', true);
-	*/
-	
-	/*
-	 $("#selectedDoctor").change(function(event){ //wrap doctor drop down and binds change handler
-		
-		var doctorObj = JSON.parse($(this).val());
-		//alert(doctorObj['physicianName']);
-		//$("#name").html("doctorObj"); 
-		 $.get(
-				 
-				 'view/get-physician-info-detail.jsp',
-				 {
-					 doctorInfo: $(event.target).val()
-				 },
-				 function(response){
-					 $('#doctor-info-detail').html(response);
-					 $('[value=""]', event,target).remove();
-				 }
-		 
-		 
-		 );
-		 
-	 });	
-	*/
-});
-	</script>
-	
 </head>
 <body>
 	
@@ -135,17 +69,9 @@ $(document).ready(function() {
 				</div>
 				
 		</div>
-	<%-- 
-		<json:object>
-			<json:property name="physicianName" value="${thePhysician.physicianName }"/>
-			<json:property name="physicianSpecialty" value="${thePhysician.physicianSpecialty }"/>
-			<json:property name="physicianAddress" value="${thePhysician.physicianAddress }"/>
-			<json:property name="physicianPhone" value="${thePhysician.physicianPhone }"/>
+	
 		
-			
-		</json:object>
-		
---%>
+
 		<div class="doctor-info-detail">				
 				
 			<div class="form-group">
@@ -210,9 +136,10 @@ $(document).ready(function() {
 		
 		<div class="clearfix">
 			
-			<p><a href=" <c:url value= "/patient/viewPatientInfo?patientId=${selectedPatientId}">
-						
-						</c:url> "> Back to the Patient Info View</a></p>
+			<p>
+				<a href=" <c:url value= "/patient/viewPatientInfo?patientId=${selectedPatientId}">
+				</c:url> "> Back to the Patient Info View</a>
+			</p>
 		</div>
 		
 		

@@ -7,7 +7,7 @@
 <html>
 
 <head>
-	<title>Save Pharmacy</title>
+	<title>Add Pharmacy</title>
 	
 	<link type="text/css" 
 		rel="stylesheet" 
@@ -16,6 +16,9 @@
 	<link type="text/css" 
 		rel="stylesheet" 
 		href="${pageContext.request.contextPath }/resources/css/style.css">
+		<script type="text/javascript" src="${pagrContext.request.contextPath }/resources/js/jquery.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/getPharmacyInfo.js"></script>
 </head>
 <body>
 	
@@ -28,7 +31,7 @@
 				</div>
 				
 			</div>
-	<c:set var="allPharmacies" value="${allPharmacies.get(0)}"/>		
+	
 	<div class="container">
 		<h3>Add Pharmacy to Patient</h3>
 		<form:form action="addPharmacy" modelAttribute="pharmacy" method="POST"
@@ -39,30 +42,41 @@
 			<input type="hidden" name="selectedPatientId" value="${selectedPatientId}"/>
 			
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Pharmacy Name:</label>
+				<label class="col-sm-2 control-label">Pharmacy List:</label>
 				<div class="col-sm-5">
-					<select class="form-control" name="pharmacyList">
-						<c:forEach items="${listAllPharmacies}" var="allPharmacies">
-							<option value="${allPharmacies.id}">${allPharmacies.pharmacyName}</option>
-							
+					<select class="form-control" name="selectedPahrmacy" id="selectedPharmacy">
+						<option value="">Select Pharmacy in the List</option>
+						<c:forEach items="${listAllPharmacies }" var="thePharmacy">
+							<option value='{"pharmacyName":"${thePharmacy.pharmacyName }",
+											"pharmacyPhone":"${thePharmacy.pharmacyPhone }",
+											"pharmacyAddress":"${thePharmacy.pharmacyAddress }"
+											}'>${thePharmacy.pharmacyName }
+							</option>
+						
 						</c:forEach>
 					</select>
-					<%-- 
-					<form:input path="pharmacyName" type="text" class="form-control" />
-					--%>
+				</div>
+			</div>
+		<div class="pharmacy-info-detail">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Pharmacy Name:</label>
+				<div class="col-sm-5">
+					
+					<form:input path="pharmacyName" type="text" class="form-control" id="name" />
+					
 				</div>
 			</div>
 									
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Addess:</label>
 				<div class="col-sm-5">
-					<form:input path="pharmacyAddress" type="text" class="form-control" />
+					<form:input path="pharmacyAddress" type="text" class="form-control" id="address" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Phone:</label>
 				<div class="col-sm-5">
-					<form:input path="pharmacyPhone" type="text" class="form-control" />
+					<form:input path="pharmacyPhone" type="text" class="form-control" id="phone"/>
 				</div>
 			</div>
 			<%-- 
@@ -74,7 +88,7 @@
 			</div>
 			
 			--%>
-			
+		</div>	
 			<div class="form-group">
 				
 				<div class="col-sm-offset-2 col-sm-5">
@@ -84,9 +98,10 @@
 		</form:form>
 		<div class="clearfix">
 			
-			<p><a href=" <c:url value= "/patient/viewPatientInfo?patientId=${selectedPatientId}">
-						
-						</c:url> "> Back to the Patient Info View</a></p>
+			<p>
+				<a href=" <c:url value= "/patient/viewPatientInfo?patientId=${selectedPatientId}">
+				</c:url> "> Back to the Patient Info View</a>
+			</p>
 		</div>
 		
 	</div>
