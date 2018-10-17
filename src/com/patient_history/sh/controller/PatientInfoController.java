@@ -242,27 +242,25 @@ public class PatientInfoController {
 		return "add-pharmacy-form";
 	}
 	
-
-	
-	
+		
 	@PostMapping("/addPharmacy") 
 	//the "savePharmacy" must be matched up with the one in the form action
 	public String addPharmacy(@ModelAttribute("pharmacy") Pharmacy thePharmacy,
 								 @RequestParam("selectedPatientId") int thePatientId) {
 		//Check pharmacy name for existing
 		//if(thePharmacy.getPharmacyName() = )
-		
+		patient_id = thePatientId;
 		//get the patient from our service
 		Patient thePatient = patientService.getPatient(thePatientId);
 		
 		//the model attribute "patient" must match with the one defined the form
 		
 		//save new patient using our service
-		patientService.savePatient(thePatient);
+		//patientService.savePatient(thePatient);
 		pharmacyService.savePharmacy(thePharmacy, thePatient);
 		//patientService.savePatient(thePatient);
 		
-		return "add-pharmacy-form";
+		return "redirect:/patient/addPharmacyForm?patientId=" + patient_id;
 	}
 	
 	@GetMapping("/updatePharmacyForm")
@@ -306,13 +304,21 @@ public class PatientInfoController {
 	
 	
 	@GetMapping("/deletePharmacy")
-	public String deletePrescription(@RequestParam("pharmacyId") int thePharmacyId,
+	public String deletePharmacy(@RequestParam("pharmacyId") int thePharmacyId,
 									 @RequestParam("selectedPatientId") int thePatientId) {
 		//delete the patient
 		pharmacyService.deletePharmacy(thePharmacyId, thePatientId);
 		return "redirect:/patient/viewPatientInfo?patientId=" + patient_id ;
 	}
 	
+	public Pharmacy getPharmacyById(@RequestParam("selectedPharmacy") int thePharmacyId, Model theModel) {
+		Pharmacy thePharmacy = pharmacyService.getSelectedPharmacy(thePharmacyId);
+		
+		//set seleted physican and patient as a model attribute to pre-populate the form
+		theModel.addAttribute("selectedPharmacy", thePharmacy);
+		return thePharmacy;
+		
+	}
 	
 	
 

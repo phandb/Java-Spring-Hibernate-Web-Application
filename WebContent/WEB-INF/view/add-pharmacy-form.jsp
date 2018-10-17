@@ -44,7 +44,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Pharmacy List:</label>
 				<div class="col-sm-5">
-					<select class="form-control" name="selectedPahrmacy" id="selectedPharmacy">
+					<select class="form-control" name="selectedPharmacy" id="selectedPharmacy">
 						<option value="">Select Pharmacy in the List</option>
 						<c:forEach items="${listAllPharmacies }" var="thePharmacy">
 							<option value='{"pharmacyName":"${thePharmacy.pharmacyName }",
@@ -62,7 +62,7 @@
 				<label class="col-sm-2 control-label">Pharmacy Name:</label>
 				<div class="col-sm-5">
 					
-					<form:input path="pharmacyName" type="text" class="form-control" id="name" />
+					<form:input path="pharmacyName" value = "" type="text" class="form-control" id="name" />
 					
 				</div>
 			</div>
@@ -70,13 +70,13 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Addess:</label>
 				<div class="col-sm-5">
-					<form:input path="pharmacyAddress" type="text" class="form-control" id="address" />
+					<form:input path="pharmacyAddress" value = "" type="text" class="form-control" id="address" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Phone:</label>
 				<div class="col-sm-5">
-					<form:input path="pharmacyPhone" type="text" class="form-control" id="phone"/>
+					<form:input path="pharmacyPhone"  value = ""  type="text" class="form-control" id="phone"/>
 				</div>
 			</div>
 			<%-- 

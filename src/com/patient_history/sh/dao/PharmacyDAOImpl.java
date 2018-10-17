@@ -67,7 +67,7 @@ public class PharmacyDAOImpl implements PharmacyDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		
 		//add the patient to Pharmacy 
-		thePharmacy.addPatient(thePatient);
+		thePharmacy.addPharmacyToPatient(thePatient);
 		
 		//Save new record and update existing record
 		currentSession.saveOrUpdate(thePharmacy);
@@ -97,7 +97,7 @@ public class PharmacyDAOImpl implements PharmacyDAO {
 		//delete the object with pharmacu ID
 		NativeQuery nativeQuery = currentSession.createNativeQuery(nativeSql);
 		nativeQuery.setParameter("pharmacyId", thePharmacyId);
-		nativeQuery.setParameter("patientid", thePatientId);
+		nativeQuery.setParameter("patientId", thePatientId);
 		
 		//execute the query
 		nativeQuery.executeUpdate();

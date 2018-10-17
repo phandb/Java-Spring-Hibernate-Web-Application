@@ -61,7 +61,7 @@ public class PhysicianDAOImpl implements PhysicianDAO {
 		// get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		//call the convenience method to add the patient to physician
+		//call the convenience method in Physician Class to add the patient to physician
 		thePhysician.addPatientToPhysician(thePatient);
 		//save or update either new or existing records
 		//currentSession.save(thePhysician);

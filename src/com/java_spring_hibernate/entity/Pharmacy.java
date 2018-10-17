@@ -61,7 +61,7 @@ public class Pharmacy {
 		joinColumns=@JoinColumn(name="pharmacy_id"),
 		inverseJoinColumns=@JoinColumn(name="patient_id")
 		)
-	private List<Patient> patients;
+	private List<Patient> patients = new ArrayList<Patient>();
 	
 	
 	/***************************************************************************/
@@ -136,7 +136,7 @@ public class Pharmacy {
 
 
 	//add convenience methods for bi-directional relationship
-	public void addPatient(Patient tempPatient) {
+	public void addPharmacyToPatient(Patient tempPatient) {
 		if (patients == null) {
 			patients = new ArrayList<>();
 		}
