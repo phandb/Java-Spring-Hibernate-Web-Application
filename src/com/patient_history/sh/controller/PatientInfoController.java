@@ -47,6 +47,7 @@ public class PatientInfoController {
 	@Autowired
 	private PhysicianService physicianService;
 	
+	/**********************************************************************/
 	@GetMapping("/viewPatientInfo")
 	public String listPatientInfo(@RequestParam("patientId") int thePatientId,  Model theModel) {
 		
@@ -58,7 +59,7 @@ public class PatientInfoController {
 		List<Physician> patientPhysicianList = physicianService.getPhysician(thePatientId);
 		
 		//get the patient from our service
-		Patient thePatient = patientService.getPatient(thePatientId);
+		Patient thePatient = patientService.getPatientById(thePatientId);
 		
 				
 		//set patient, medication, physician, and pharmacy as  model attributes to populate info
@@ -71,8 +72,7 @@ public class PatientInfoController {
 		return "patient-info";
 	}
 	
-	/********************* Medication CRUD 
-	 * @param <CMDBean>**************************************/
+	/********************* Medication CRUD 	 * @param <CMDBean>**************************************/
 
 
 	@GetMapping("/addPrescriptionForm")
@@ -81,27 +81,26 @@ public class PatientInfoController {
 		
 		
 		//patient_id = patientId;
-		//create model attribute to bind form data
-		Medication thePrescription = new Medication();
-		//get the patient from our service
-		//Patient thePatient = patientService.getPatient(patientId);
 		
+		Medication thePrescription = new Medication();
+		
+		//create model attribute to bind form data	
 		theModel.addAttribute("prescription", thePrescription);
 		theModel.addAttribute("selectedPatientId", patientId);
 		return "prescription-form";
 	}
 	
 	@PostMapping("savePrescription") 
+	
 	//the "savePrescription" must be matched up with the one in the form action
 	public String saveMedication(@ModelAttribute("prescription") Medication thePrescription,
 								 @RequestParam("selectedPatientId") int thePatientId) {
 		
 		
 		//get the patient from our service
-		Patient thePatient = patientService.getPatient(thePatientId);
-		//the model attribute "patient" must match with the one defined the form
+		Patient thePatient = patientService.getPatientById(thePatientId);
 		
-		//save new patient using our service
+		//the model attribute "patient" must match with the one defined the form
 		patientService.savePatient(thePatient);
 		medicationService.saveMedication(thePrescription, thePatient);
 		//patientService.savePatient(thePatient);
@@ -112,6 +111,7 @@ public class PatientInfoController {
 	
 	
 	@GetMapping("/updatePrescriptionForm")
+	
 	public String updatePrescriptionForm(@RequestParam("prescriptionId") int thePrescriptionId, 
 										@RequestParam("selectedPatientId") int thePatientId,
 									   Model theModel) {
@@ -122,8 +122,8 @@ public class PatientInfoController {
 		//set prescriptiont as a model attribute to pre-populate the form
 		theModel.addAttribute("prescription", thePrescription);
 		theModel.addAttribute("selectedPatientId", thePatientId);
-		//send over to  our form
 		
+		//send over to  our form
 		return "prescription-form" ;
 	}
 	
@@ -131,6 +131,7 @@ public class PatientInfoController {
 	
 	@GetMapping("/deletePrescription")
 	public String deletePrescription(@RequestParam("prescriptionId") int theId) {
+		
 		//delete the patient
 		medicationService.deletePrescription(theId);
 		return "redirect:/patient/viewPatientInfo?patientId=" + patient_id ;
@@ -141,15 +142,19 @@ public class PatientInfoController {
 
 
 	@GetMapping("/addPhysicianForm")
+	
 	//Method name should match the name of URI onclick="window.location.href='addPhysicianForm'
 	public String addPhysicianForm(@RequestParam("patientId") int patientId, Model theModel) {
+		//Thing to do: Add new doctor who is not from the list
+		
 		
 		//Get list all Physician to post on form
 		List<Physician> listAllPhysicians = physicianService.getAllPhysicians();
+		
 		//create model attribute to bind form data
 		Physician thePhysician = new Physician();
 		
-		//pass to jsp page
+		//pass attributes to jsp page
 		theModel.addAttribute("listAllPhysicians", listAllPhysicians);
 		theModel.addAttribute("physician", thePhysician);
 		theModel.addAttribute("selectedPatientId", patientId);
@@ -157,15 +162,18 @@ public class PatientInfoController {
 	}
 	
 		
-	@PostMapping("/addPhysician") //the "savePatient" must be matched up with the one in the form action
-	public String addPhysician(@ModelAttribute("physician") Physician thePhysician,
-							    @RequestParam("selectedPatientId") int thePatientId ) {
+	@PostMapping("/addPhysician") 
+	
+	//the "savePatient" must be matched up with the one in the form action
+	public String addPhysician(@RequestParam("selectedPhysicianId") int thePhysicianId,
+							   @RequestParam("selectedPatientId") int thePatientId ) {
 		patient_id = thePatientId;
+		
 		//get the patient from our service
-		Patient thePatient = patientService.getPatient(thePatientId);
+		Patient thePatient = patientService.getPatientById(thePatientId);
+		Physician thePhysician = physicianService.getSelectedPhysician(thePhysicianId);
 		
 		//save patient using our service
-		//patientService.savePatient(thePatient);
 		physicianService.savePhysician(thePhysician, thePatient);
 		
 		return "redirect:/patient/addPhysicianForm?patientId=" + patient_id;
@@ -182,17 +190,19 @@ public class PatientInfoController {
 		//set seleted physican and patient as a model attribute to pre-populate the form
 		theModel.addAttribute("physician", thePhysician);
 		theModel.addAttribute("selectedPatientId", thePatientId);
-		//send over to  our form
 		
+		//send over to  our form
 		return "update-physician-form";
 	}
 	
-	@PostMapping("/updatePhysician") //the "savePatient" must be matched up with the one in the form action
+	@PostMapping("/updatePhysician") 
+	
+	//the "savePatient" must be matched up with the one in the form action
 	public String updatePhysician(@ModelAttribute("physician") Physician thePhysician,
 							    @RequestParam("selectedPatientId") int thePatientId) {
 
 		//get the patient from our service
-		Patient thePatient = patientService.getPatient(thePatientId);
+		Patient thePatient = patientService.getPatientById(thePatientId);
 		
 		//save patient using our service
 		patientService.savePatient(thePatient);
@@ -231,7 +241,7 @@ public class PatientInfoController {
 	public <CMDBean> String addPharmacyForm(@RequestParam("patientId") int patientId, Model theModel) {
 		
 		List<Pharmacy> listAllPharmacies = pharmacyService.getAllPharmacies();
-		//patient_id = patientId;
+		
 		//create model attribute to bind form data
 		Pharmacy thePharmacy = new Pharmacy();
 		
@@ -244,21 +254,23 @@ public class PatientInfoController {
 	
 		
 	@PostMapping("/addPharmacy") 
+	
 	//the "savePharmacy" must be matched up with the one in the form action
-	public String addPharmacy(@ModelAttribute("pharmacy") Pharmacy thePharmacy,
-								 @RequestParam("selectedPatientId") int thePatientId) {
+	public String addPharmacy(@RequestParam("selectedPharmacyId") int thePharmacyId,
+							 @RequestParam("selectedPatientId") int thePatientId) {
+		
 		//Check pharmacy name for existing
 		//if(thePharmacy.getPharmacyName() = )
 		patient_id = thePatientId;
+		
 		//get the patient from our service
-		Patient thePatient = patientService.getPatient(thePatientId);
+		Patient thePatient = patientService.getPatientById(thePatientId);
+		Pharmacy thePharmacy = pharmacyService.getSelectedPharmacy(thePharmacyId);
 		
 		//the model attribute "patient" must match with the one defined the form
-		
 		//save new patient using our service
-		//patientService.savePatient(thePatient);
 		pharmacyService.savePharmacy(thePharmacy, thePatient);
-		//patientService.savePatient(thePatient);
+		
 		
 		return "redirect:/patient/addPharmacyForm?patientId=" + patient_id;
 	}
@@ -281,21 +293,22 @@ public class PatientInfoController {
 	
 	
 	@PostMapping("/updatePharmacy") 
+	
 	//the "savePharmacy" must be matched up with the one in the form action
 	public String updatePharmacy(@ModelAttribute("pharmacy") Pharmacy thePharmacy,
 								 @RequestParam("selectedPatientId") int thePatientId) {
+		
 		//Check pharmacy name for existing
 		//if(thePharmacy.getPharmacyName() = )
 		
 		//get the patient from our service
-		Patient thePatient = patientService.getPatient(thePatientId);
+		Patient thePatient = patientService.getPatientById(thePatientId);
 		
 		//the model attribute "patient" must match with the one defined the form
-		
 		//save new patient using our service
 		patientService.savePatient(thePatient);
 		pharmacyService.savePharmacy(thePharmacy, thePatient);
-		//patientService.savePatient(thePatient);
+		
 		
 		return "redirect:/patient/viewPatientInfo?patientId=" + patient_id ;
 	}

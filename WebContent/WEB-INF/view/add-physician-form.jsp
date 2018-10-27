@@ -43,11 +43,13 @@
 		
 		
 		
-		<form:form action="addPhysician" modelAttribute="physician" method="POST"
-					class="form-horizontal">
-					
-			<!-- The hidden form will keep specific prescription Id when called -->
+		<form:form method="POST" action="addPhysician"  modelAttribute="physician" class="form-horizontal">
+		
+			<%-- 	modelAttribute="physician"
+			<!-- The hidden form will keep specific prescription Id when called   -->
 			<form:hidden path="id" />
+			--%>	
+			
 			<input type="hidden" name="selectedPatientId" value="${selectedPatientId}"/>
 			
 			
@@ -55,31 +57,34 @@
 				<label class="col-sm-2 control-label">Physician List:</label>
 				<div class="col-sm-5">
 				
-					<select   class="form-control" name="selectedPhysician"  id="selectedDoctor" > 
-													
-						<option value="" >Select Doctor in the List</option>
-						<c:forEach items="${listAllPhysicians }" var="thePhysician" >
+					<select class="form-control"  name="selectedPhysicianId"  id="selectedDoctor" > 
+					
+							<c:forEach items="${listAllPhysicians }" var="thePhysician">
+								<option value="${thePhysician.id }"> ${thePhysician.physicianName } </option>
 							
-							<option value= '{ "physicianName":"${thePhysician.physicianName }","physicianSpecialty":"${thePhysician.physicianSpecialty }",
-											  "physicianAddress":"${thePhysician.physicianAddress }","physicianPhone":"${thePhysician.physicianPhone }"
-											}'>  ${thePhysician.physicianName}</option>
-							
-						</c:forEach>
+							</c:forEach>					
+						
+						
+							<%--
+							<form:option value= '{ "physicianName":"${thePhysician.physicianName }","physicianSpecialty":"${thePhysician.physicianSpecialty }",
+											  "physicianAddress":"${thePhysician.physicianAddress }","physicianPhone":"${thePhysician.physicianPhone }",
+											  "physicianId":"${thePhysician.id }"
+											}' label=" ${thePhysician.physicianName} "/>
+							 
+							 <form:options items = "${listAllPhysicians.getPhysicianName()}"  />
+							--%>
 					</select>
 				</div>
 				
 		</div>
 	
-		
-
+	
 		<div class="doctor-info-detail">				
 				
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Physician Name:</label>
 				<div class="col-sm-5">
-					<form:input path="physicianName" value = ""
-								 type="text" class="form-control" 
-								 id="name" />
+					<form:input path="physicianName" type="text" class="form-control" id="name" />
 				</div>
 			</div>
 					 
@@ -88,34 +93,23 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Specialty:</label>
 				<div class="col-sm-5">
-					<form:input path="physicianSpecialty"
-								 type="text" class="form-control"
-								
-								 id="specialty"  />
+					<form:input path="physicianSpecialty" type="text" class="form-control" id="specialty"  />
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Address:</label>
 				<div class="col-sm-5">
-					<form:input path="physicianAddress" 
-								type="text" 
-								
-								class="form-control" 
-								id="address" />
+					<form:input path="physicianAddress" type="text" class="form-control" id="address" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Phone:</label>
 				<div class="col-sm-5">
-					<form:input path="physicianPhone" 
-								type="text" 
-								
-								class="form-control" 
-								id="phone"/>
+					<form:input path="physicianPhone" type="text" class="form-control" id="phone"/>
 				</div>
 			</div>
-			<%-- 
+		<%--
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Patient ID:</label>
 				<div class="col-sm-5">
@@ -123,7 +117,7 @@
 				</div>
 			</div>
 			
-			--%>
+			 --%>
 	
 		</div>
 			<div class="form-group">
@@ -132,8 +126,8 @@
 					<input type="submit" value="Save" class="btn btn-primary"/>
 				</div>
 			</div>		
-		</form:form>
 		
+		</form:form>
 		<div class="clearfix">
 			
 			<p>

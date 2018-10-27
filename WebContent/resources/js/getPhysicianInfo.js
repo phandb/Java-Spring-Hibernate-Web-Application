@@ -9,7 +9,7 @@ $(document).ready(function() {
 	 $("#selectedDoctor").change(function(){ //wrap doctor drop down and binds change handler
 		
 		 var doctorObj = JSON.parse($(this).val());
-		
+		 //alert(doctorObj.physicianId);
 		 $("#name").val(doctorObj.physicianName);
 		 $("#specialty").val(doctorObj.physicianSpecialty);
 		 $("#phone").val(doctorObj.physicianPhone);

@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
 
 import com.java_spring_hibernate.entity.Patient;
 
@@ -49,7 +49,7 @@ public class PatientDAOImpl implements PatientDAO {
 	}
 
 	@Override
-	public Patient getPatient(int theId) {
+	public Patient getPatientById(int theId) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
@@ -65,7 +65,7 @@ public class PatientDAOImpl implements PatientDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		
 		//delete object with primary key
-		Query theQuery = currentSession.createQuery("delete from Patient where id=:patientId");
+		Query<Patient> theQuery = currentSession.createQuery("delete from Patient where id=:patientId", Patient.class);
 		
 		theQuery.setParameter("patientId", theId);
 		
@@ -78,7 +78,7 @@ public class PatientDAOImpl implements PatientDAO {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		Query theQuery = null;
+		Query<Patient> theQuery = null;
 		
 		//Only search by name if theSearchName is not empty
 		if(theSearchName != null && theSearchName.trim().length() > 0) {

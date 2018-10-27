@@ -72,7 +72,7 @@ public class PatientController {
 	public String updatePatientForm(@RequestParam("patientId") int theId, Model theModel) {
 		
 		//get the patient from our service
-		Patient thePatient = patientService.getPatient(theId);
+		Patient thePatient = patientService.getPatientById(theId);
 		
 		//set patient as a model attribute to pre-populate the form
 		theModel.addAttribute("patient", thePatient);

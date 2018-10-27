@@ -35,9 +35,9 @@ public class PatientServiceImpl implements PatientService {
 	
 	@Override
 	@Transactional
-	public Patient getPatient(int theId) {
+	public Patient getPatientById(int theId) {
 		
-		return patientDAO.getPatient(theId);
+		return patientDAO.getPatientById(theId);
 	}
 
 	@Override

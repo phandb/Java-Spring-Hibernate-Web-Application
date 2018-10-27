@@ -8,9 +8,7 @@ import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.java_spring_hibernate.entity.Medication;
 import com.java_spring_hibernate.entity.Patient;
 import com.java_spring_hibernate.entity.Physician;
 
@@ -42,11 +40,14 @@ public class PhysicianDAOImpl implements PhysicianDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		
 	
-		Query theQuery = currentSession.createQuery(" SELECT phy FROM Physician phy"
-												+ " JOIN phy.patients pat"
-												+ " WHERE pat.id = :patientId ");
+		Query<Physician> theQuery = currentSession.createQuery(" SELECT phy FROM Physician phy "
+												+ " JOIN FETCH phy.patients pat "
+												+ " WHERE pat.id = :patientId ", Physician.class);
 		
-		theQuery.setParameter("patientId",  thePatientId);
+		theQuery.setParameter("patientId", thePatientId);
+		
+		//Query<Physician> theQuery  = currentSession.getNamedQuery("Physician.getPatientPhysicianInfoById").setParameter("patientId",  thePatientId);
+		
 		
 		//execute the query and get result list
 		List<Physician> thePhysicians = theQuery.getResultList();
@@ -63,6 +64,7 @@ public class PhysicianDAOImpl implements PhysicianDAO {
 		
 		//call the convenience method in Physician Class to add the patient to physician
 		thePhysician.addPatientToPhysician(thePatient);
+		
 		//save or update either new or existing records
 		//currentSession.save(thePhysician);
 		currentSession.saveOrUpdate(thePhysician);
@@ -95,7 +97,7 @@ public class PhysicianDAOImpl implements PhysicianDAO {
 		
 			
 		//delete object with physician ID
-		NativeQuery nativeQuery = currentSession.createNativeQuery(nativeSql);
+		NativeQuery<?> nativeQuery = currentSession.createNativeQuery(nativeSql);
 		
 		nativeQuery.setParameter("physicianId",  thePhysicianId);
 		nativeQuery.setParameter("patientId",  thePatientId);

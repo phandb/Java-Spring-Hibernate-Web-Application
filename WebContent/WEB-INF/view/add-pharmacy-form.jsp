@@ -34,24 +34,31 @@
 	
 	<div class="container">
 		<h3>Add Pharmacy to Patient</h3>
-		<form:form action="addPharmacy" modelAttribute="pharmacy" method="POST"
-					class="form-horizontal">
-					
+		
+		<form:form action="addPharmacy" modelAttribute="pharmacy" method="POST"	class="form-horizontal">
+			<%-- 	
 			<!-- The hidden form will keep specific prescription Id when called -->
 			<form:hidden path="id" />
+			--%>	
+			
 			<input type="hidden" name="selectedPatientId" value="${selectedPatientId}"/>
 			
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Pharmacy List:</label>
 				<div class="col-sm-5">
-					<select class="form-control" name="selectedPharmacy" id="selectedPharmacy">
-						<option value="">Select Pharmacy in the List</option>
+					<select class="form-control" name="selectedPharmacyId" id="selectedPharmacy">
+				<%-- 		<option value="">Select Pharmacy in the List</option>   --%>
+				
 						<c:forEach items="${listAllPharmacies }" var="thePharmacy">
-							<option value='{"pharmacyName":"${thePharmacy.pharmacyName }",
+							<option value="${thePharmacy.id}"> ${thePharmacy.pharmacyName}</option>
+							
+							<%--
+							
+							'{"pharmacyName":"${thePharmacy.pharmacyName }",
 											"pharmacyPhone":"${thePharmacy.pharmacyPhone }",
 											"pharmacyAddress":"${thePharmacy.pharmacyAddress }"
 											}'>${thePharmacy.pharmacyName }
-							</option>
+							 --%>
 						
 						</c:forEach>
 					</select>

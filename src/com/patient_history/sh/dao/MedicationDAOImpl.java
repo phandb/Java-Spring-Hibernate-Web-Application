@@ -1,7 +1,5 @@
 package com.patient_history.sh.dao;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -9,8 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.java_spring_hibernate.entity.Medication;
 import com.java_spring_hibernate.entity.Patient;
 
@@ -49,10 +45,10 @@ public class MedicationDAOImpl implements MedicationDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 				
 		//create a query
-		Query theQuery = currentSession.createQuery("SELECT med"
+		Query<Medication> theQuery = currentSession.createQuery("SELECT med"
 													+ " FROM Medication as med"
-													+ " JOIN  med.patient as pat"
-													+ " Where pat.id = :patientId ");
+													+ " JOIN FETCH med.patient as pat"
+													+ " Where pat.id = :patientId ", Medication.class);
 										
 		
 		theQuery.setParameter("patientId", theId);
@@ -104,7 +100,8 @@ public class MedicationDAOImpl implements MedicationDAO {
 				Session currentSession = sessionFactory.getCurrentSession();
 				
 				//delete object with primary key
-				Query theQuery = currentSession.createQuery("delete from Medication where id=:prescriptionId");
+				Query<Medication> theQuery = currentSession.createQuery("delete from Medication where id=:prescriptionId ",
+																		Medication.class);
 				
 				theQuery.setParameter("prescriptionId", thePrescriptionId);
 				

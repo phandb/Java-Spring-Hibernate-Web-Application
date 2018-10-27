@@ -1,5 +1,6 @@
 package com.java_spring_hibernate.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +14,26 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 //annotate the class as an entity and map to database table
 @Entity
 @Table(name="pharmacies")
-public class Pharmacy {
+/*
+@NamedQueries({
+	@NamedQuery(name="Pharmacy.getPatientPhyarmacyInfoById",
+			query="select distinct phar from Pharmacy phar " +
+				   "left join fetch phy.patients pat " +
+					" where pat.id = :patientId"),
+	@NamedQuery(name="Pharmacy.getAllPharmacies",
+			query="select from Pharmacy phar")
+	
+	
+}) 
+*/
+public class Pharmacy implements Serializable {
 
 	//define the fields
 	//annotate the fields with db column names
@@ -53,7 +65,7 @@ public class Pharmacy {
 	
 	 // Set up Many to Many relationship with patients table using FK patient_id
 
-	@ManyToMany(fetch=FetchType.LAZY,
+	@ManyToMany(fetch=FetchType.EAGER,
 			cascade= {CascadeType.PERSIST, CascadeType.MERGE,
 					CascadeType.DETACH, CascadeType.REFRESH	})
 	@JoinTable(
@@ -61,7 +73,7 @@ public class Pharmacy {
 		joinColumns=@JoinColumn(name="pharmacy_id"),
 		inverseJoinColumns=@JoinColumn(name="patient_id")
 		)
-	private List<Patient> patients = new ArrayList<Patient>();
+	private List<Patient> patients;
 	
 	
 	/***************************************************************************/
@@ -152,12 +164,4 @@ public class Pharmacy {
 		return "Pharmacy [id=" + id + ", pharmacyName=" + pharmacyName + ", pharmacyPhone=" + pharmacyPhone
 				+ ", pharmacyAddress=" + pharmacyAddress + ", patientId_FK=" + patients + "]";
 	}
-
-
-	
-
-	
-	
-	
-
 }

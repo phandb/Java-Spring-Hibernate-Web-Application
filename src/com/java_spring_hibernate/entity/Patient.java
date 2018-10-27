@@ -1,5 +1,6 @@
 package com.java_spring_hibernate.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -14,9 +15,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,7 +25,24 @@ import javax.persistence.TemporalType;
 //Map entity class to database table
 @Entity
 @Table(name = "patients")
-public class Patient {
+/*
+@NamedQueries({
+	@NamedQuery(name="Patient.getPatientMedicationInfoById",
+			query="select distinct p from Patient p " +
+					"left join fetch p.medication m " + 
+					" where p.id = :id"),
+	@NamedQuery(name="Patient.getPatientPhysicianInfoById",
+			query="select distinct p from Patient p " +
+				   "left join fetch p.physician phy " +
+					" where p.id = :id"),
+	@NamedQuery(name="Patient.getPatientPharmacyInfoById",
+			query="select distinct p from Patient p " +
+					"left join fetch p.pharmacy phar " + 
+					" where p.id = :id"),
+	
+}) 
+*/
+public class Patient implements Serializable{
 	
 	
 	//Map to appropriate column in table patients
@@ -62,7 +80,7 @@ public class Patient {
 	
 	/*******************************************************************/
 	//Mapping Many To Many relationship with physicians table
-	@ManyToMany(fetch=FetchType.LAZY,
+	@ManyToMany(fetch=FetchType.EAGER,
 				cascade= {CascadeType.PERSIST, CascadeType.MERGE,
 						  CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(
@@ -70,7 +88,7 @@ public class Patient {
 			joinColumns=@JoinColumn(name="patient_id"),
 			inverseJoinColumns=@JoinColumn(name="physician_id")
 			)
-	private List<Physician> physicians = new ArrayList<Physician>();
+	private List<Physician> physicians;
 	
 	/*****************************************************************/
 	//Mapping Many To Many relationship with pharmacies table
@@ -196,7 +214,8 @@ public class Patient {
 	public void setPhysicians(List<Physician> physicians) {
 		this.physicians = physicians;
 	}
-
+	
+	//Setter and getter for pharmacies
 	public List<Pharmacy> getPharmacies() {
 		return pharmacies;
 	}
@@ -228,7 +247,7 @@ public class Patient {
 		return fullName;
 	}
 	
-	
+/*	
 	//Add convenience methods for bi-directional relationship
 	
 	public void addPhysicianToPatient(Physician tempPhysician) {
@@ -240,7 +259,7 @@ public class Patient {
 		
 		tempPhysician.getPatients().add(this);
 	}
-	
+	*/
 	public void removePhysician(Physician tempPhysician) {
 		this.physicians.remove(tempPhysician);
 		tempPhysician.getPatients().remove(this);

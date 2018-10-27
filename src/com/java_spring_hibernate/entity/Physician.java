@@ -1,5 +1,6 @@
 package com.java_spring_hibernate.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +14,25 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="physicians")
-public class Physician {
+/*
+@NamedQueries({
+	@NamedQuery(name="Physician.getPatientPhysicianInfoById",
+			query="select distinct phy from Physician phy " +
+				   "left join fetch phy.patients pat " +
+					" where pat.id = :patientId"),
+	@NamedQuery(name="Physician.getAllPhysicians",
+			query="from Physician phy")
+	
+	
+}) 
+*/
+public class Physician implements Serializable{
 	
 	//annotate the class as an entity and map to database table
 
@@ -52,7 +66,7 @@ public class Physician {
 	//Relationship with patients table
 	//a doctor can have many patients, and  a patient can have many doctors
 	//No delete cascade type.  Can't not delete doctor once a patient is deleted
-	@ManyToMany(fetch = FetchType.LAZY,
+	@ManyToMany(fetch = FetchType.EAGER,
 				cascade= {CascadeType.PERSIST, CascadeType.MERGE,
 						 CascadeType.DETACH, CascadeType.REFRESH})
 	
@@ -61,7 +75,7 @@ public class Physician {
 			joinColumns=@JoinColumn(name="physician_id"),
 			inverseJoinColumns=@JoinColumn(name="patient_id")
 			)
-	private List<Patient> patients = new ArrayList<Patient>();
+	private List<Patient> patients;
 	
 	
 	/*****************************************************************/

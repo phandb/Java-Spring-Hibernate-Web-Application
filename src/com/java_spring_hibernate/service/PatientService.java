@@ -10,7 +10,7 @@ public interface PatientService {
 
 	public void savePatient(Patient thePatient);
 
-	public Patient getPatient(int theId);
+	public Patient getPatientById(int theId);
 
 	public void deletePatient(int theId);
 
